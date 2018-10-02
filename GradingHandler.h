@@ -30,8 +30,7 @@ namespace OHARStudent {
 		bool consume(OHARBase::Package & data);
 		
 	private:
-      /** The ProcessorNode where this handler is residing in. */
-		OHARBase::ProcessorNode & node;
+      
 		const std::string TAG;
 	};
 	

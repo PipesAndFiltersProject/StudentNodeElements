@@ -21,7 +21,7 @@ namespace OHARStudent {
     @param myNode The ProcessorNode where the handler is located in.
     */
    GradingHandler::GradingHandler(OHARBase::ProcessorNode & myNode)
-   : node(myNode), TAG("GradingHandler")
+   : TAG("GradingHandler")
    {
       // Uses the static student member variable and setter so that all students
       // use the same grade calculator. Equal grading for all students, eh?!
