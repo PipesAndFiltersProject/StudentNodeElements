@@ -35,28 +35,33 @@ namespace OHARBase {
 namespace OHARStudent {
 
 	
-class StudentDataItem;
+   class StudentDataItem;
 
-class StudentHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
-public:
-   StudentHandler(OHARBase::ProcessorNode & myNode);
-   virtual ~StudentHandler();
-   
-   bool consume(OHARBase::Package & data);
+   /** A DataHandler class for handling student data in a ProcessorNode.
+    This class handles data arriving from other ProcessorNodes or read from a data file.
+    */
+   class StudentHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
+   public:
+      StudentHandler(OHARBase::ProcessorNode & myNode);
+      virtual ~StudentHandler();
+      
+      bool consume(OHARBase::Package & data);
 
-   // From DataReaderObserver
-   void handleNewItem(OHARBase::DataItem * item);
-   
-private:
-   void readFile();
-   
-   StudentDataItem * findStudent(const StudentDataItem & which) const;
-   
-   OHARBase::ProcessorNode & node;
-   const std::string TAG;
-   std::list<OHARBase::DataItem*> dataItems;
-   
-};
+      // From DataReaderObserver
+      void handleNewItem(OHARBase::DataItem * item);
+      
+   private:
+      void readFile();
+      
+      StudentDataItem * findStudent(const StudentDataItem & which) const;
+      
+      /** The ProcessorNode where this handler is residing in. */
+      OHARBase::ProcessorNode & node;
+      const std::string TAG;
+      /** This list holds the student data handled by this handler. */
+      std::list<OHARBase::DataItem*> dataItems;
+      
+   };
 
 	
 } //namespace

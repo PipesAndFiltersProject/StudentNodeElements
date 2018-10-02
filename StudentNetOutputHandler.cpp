@@ -27,21 +27,34 @@ namespace OHARStudent {
 		
 	}
 	
+   /**
+    Consumes the data, assuming it contains the student data object in Node
+    internal format. Then formats the data to the format needed when sending
+    it to the next Node over the network.
+    @param data The Package which contains the student data in binary (internal) format.
+    @return Returns true if package was handled, otherwise returns false.
+    */
 	bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
 		OHARBase::Log::getInstance().entry(TAG, "Starting to send a package");
 		if (data.getType() == OHARBase::Package::Data) {
 			OHARBase::DataItem * item = data.getDataItem();
+         // If the package contains the binary data object...
 			if (item) {
 				const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
+            // ...and it was a student data item object...
 				if (student) {
+               // ...stream the data into a string payload...
 					OHARBase::Log::getInstance().entry(TAG, "It is a student so creating payload");
 					std::stringstream stream;
 					std::string payload;
 					stream << *(student);
 					payload = stream.str();
+               // ... set it as the data for the Package...
 					data.setData(payload);
+               // ... and erase the binary data item from the Package...
 					data.setDataItem(0);
 					OHARBase::Log::getInstance().entry(TAG, "And telling the processornode to send.");
+               // ... and ask the Node to send the data to the next Node.
 					node.sendData(data);
 				}
 			}

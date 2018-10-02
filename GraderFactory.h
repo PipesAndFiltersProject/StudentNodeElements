@@ -12,12 +12,15 @@
 namespace OHARStudent {
 
 	
-class GradeCalculator;
+   class GradeCalculator;
 
-class GraderFactory {
-public:
-   static GradeCalculator * makeGrader();
-};
+   /** A class for creating student grader algorithm objects, used 
+    in grading students.
+    */
+   class GraderFactory {
+   public:
+      static GradeCalculator * makeGrader();
+   };
 
 	
 } //namespace

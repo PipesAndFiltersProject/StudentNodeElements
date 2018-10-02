@@ -24,22 +24,23 @@ namespace OHARBase {
 namespace OHARStudent {
 	
 
-class PlainStudentFileHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
-public:
-   PlainStudentFileHandler(OHARBase::ProcessorNode & myNode);
-   virtual ~PlainStudentFileHandler();
-   
-   bool consume(OHARBase::Package & data);
-   
-   // From DataReaderObserver
-   void handleNewItem(OHARBase::DataItem * item);
-   
-private:
-   void readFile();
-   
-   OHARBase::ProcessorNode & node;
-   const std::string TAG;
-};
+   /** A DataHandler class which reads student data from a file. */
+   class PlainStudentFileHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
+   public:
+      PlainStudentFileHandler(OHARBase::ProcessorNode & myNode);
+      virtual ~PlainStudentFileHandler();
+      
+      bool consume(OHARBase::Package & data);
+      
+      // From DataReaderObserver
+      void handleNewItem(OHARBase::DataItem * item);
+      
+   private:
+      void readFile();
+      
+      OHARBase::ProcessorNode & node;
+      const std::string TAG;
+   };
 
 	
 } //namespace

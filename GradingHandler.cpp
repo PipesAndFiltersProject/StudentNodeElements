@@ -15,30 +15,41 @@
 
 namespace OHARStudent {
 
-	
-GradingHandler::GradingHandler(OHARBase::ProcessorNode & myNode)
-: node(myNode), TAG("GradingHandler")
-{
-   StudentDataItem::setGradeCalculator(GraderFactory::makeGrader());
-}
+	/**
+    Initializes the grading handler by creating a suitable grade calculator,
+    using the help of the GraderFactory class.
+    @param myNode The ProcessorNode where the handler is located in.
+    */
+   GradingHandler::GradingHandler(OHARBase::ProcessorNode & myNode)
+   : node(myNode), TAG("GradingHandler")
+   {
+      // Uses the static student member variable and setter so that all students
+      // use the same grade calculator. Equal grading for all students, eh?!
+      StudentDataItem::setGradeCalculator(GraderFactory::makeGrader());
+   }
 
-GradingHandler::~GradingHandler() {
-   StudentDataItem::setGradeCalculator(0);
-}
+   GradingHandler::~GradingHandler() {
+      StudentDataItem::setGradeCalculator(0);
+   }
 
-bool GradingHandler::consume(OHARBase::Package & data) {
-	if (data.getType() == OHARBase::Package::Data) {
-      OHARBase::DataItem * item = data.getDataItem();
-      if (item) {
-         StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
-         if (student) {
-            OHARBase::Log::getInstance().entry(TAG, "Calculating a grade for the student.");
-            student->calculateGrade();
+   /** Grades the student based on the various course passing aspects, using the 
+    selected grader algorithm.
+    @param data The Package containing the student data.
+    @returns Returns false, giving other handlers the opportunity to handle the package too.
+    */
+   bool GradingHandler::consume(OHARBase::Package & data) {
+      if (data.getType() == OHARBase::Package::Data) {
+         OHARBase::DataItem * item = data.getDataItem();
+         if (item) {
+            StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
+            if (student) {
+               OHARBase::Log::getInstance().entry(TAG, "Calculating a grade for the student.");
+               student->calculateGrade();
+            }
          }
       }
+      return false; // Always let others handle this data package too.
    }
-   return false; // Always let others handle this data package too.
-}
 
 
 } //namespace

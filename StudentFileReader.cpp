@@ -15,28 +15,32 @@
 namespace OHARStudent {
 
 	
-StudentFileReader::StudentFileReader(OHARBase::DataReaderObserver & obs)
-: OHARBase::DataFileReader(obs), TAG("SFileReader") {
-   
-}
-
-StudentFileReader::~StudentFileReader() {
-   
-}
-   
-OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
-   StudentDataItem * item = 0;
-   if (str.length() > 0) {
-		OHARBase::Log::getInstance().entry(TAG, "Parsing line: %s", str.c_str());
-      item = new StudentDataItem();
-      if (!item->parse(str, contentType)) {
-         OHARBase::Log::getInstance().entry(TAG, "SDataItem failed to parse!");
-         delete item;
-         item = 0;
-      }
+   StudentFileReader::StudentFileReader(OHARBase::DataReaderObserver & obs)
+   : OHARBase::DataFileReader(obs), TAG("SFileReader") {
+      
    }
-   return item;
-}
+
+   StudentFileReader::~StudentFileReader() {
+      
+   }
+    
+   /**
+    Parses a string containing student data.
+    @param str The line of string to parse, assuming to have student data items.
+    @param contentType Which kind of student data the line contains.
+    @returns The new student data item, or null if creation fails.
+    */
+   OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
+      std::unique_ptr<StudentDataItem> itemPtr(new StudentDataItem());
+      if (str.length() > 0) {
+         OHARBase::Log::getInstance().entry(TAG, "Parsing line: %s", str.c_str());
+         if (!itemPtr->parse(str, contentType)) {
+            OHARBase::Log::getInstance().entry(TAG, "SDataItem failed to parse!");
+            return nullptr;
+         }
+      }
+      return itemPtr.release();
+   }
 
 
 } //namespace

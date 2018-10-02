@@ -21,18 +21,20 @@ namespace OHARBase {
 
 namespace OHARStudent {
 
-
-class StudentFileReader : public OHARBase::DataFileReader {
-public:
-   StudentFileReader(OHARBase::DataReaderObserver & obs);
-   virtual ~StudentFileReader();
-   
-protected:
-	OHARBase::DataItem * parse(const std::string & str, const std::string & contentType);
-   
-private:
-   const std::string TAG;
-};
+   /**
+    The reader class to read student data from a file.
+    */
+   class StudentFileReader : public OHARBase::DataFileReader {
+   public:
+      StudentFileReader(OHARBase::DataReaderObserver & obs);
+      virtual ~StudentFileReader();
+      
+   protected:
+      OHARBase::DataItem * parse(const std::string & str, const std::string & contentType);
+      
+   private:
+      const std::string TAG;
+   };
 
 	
 } //namespace

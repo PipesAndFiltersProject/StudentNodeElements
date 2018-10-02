@@ -18,20 +18,25 @@ namespace OHARBase {
 
 namespace OHARStudent {
 	
-class StudentFileWriter;
+   class StudentFileWriter;
 
-class StudentWriterHandler : public OHARBase::DataHandler {
-public:
-   StudentWriterHandler(OHARBase::ProcessorNode & myNode);
-   virtual ~StudentWriterHandler();
-   
-   bool consume(OHARBase::Package & data);
-   
-private:
-   OHARBase::ProcessorNode & node;
-   StudentFileWriter * writer;
-   const std::string TAG;
-};
+   /** The DataHandler in the ProcessorNode which handles packages
+    containing student data so that the student data is written into a file.
+    */
+   class StudentWriterHandler : public OHARBase::DataHandler {
+   public:
+      StudentWriterHandler(OHARBase::ProcessorNode & myNode);
+      virtual ~StudentWriterHandler();
+      
+      bool consume(OHARBase::Package & data);
+      
+   private:
+      /** The ProcessorNode where this handler is residing in. */
+      OHARBase::ProcessorNode & node;
+      /** The writer to use in writing the data into the file. */
+      StudentFileWriter * writer;
+      const std::string TAG;
+   };
 
 
 } //namespace

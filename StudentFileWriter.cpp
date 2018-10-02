@@ -15,37 +15,44 @@
 namespace OHARStudent {
 
 	
-	
-StudentFileWriter::StudentFileWriter(const std::string & fileName) {
-   using std::chrono::system_clock;
-	if (fileName.length() > 0) {
-		file.open(fileName, std::ofstream::out | std::ofstream::app);
-		if (file.is_open()) {
-			system_clock::time_point today = system_clock::now();
-			std::time_t tt;
-			tt = system_clock::to_time_t ( today );
-			file << std::endl << std::endl;
-			file << "** Welcome to student register system" << std::endl;
-			file << "** (c) Antti Juustila, 2014. University of Oulu, Finland." << std::endl;
-			file << "** Today is: " << ctime(&tt) << std::endl;
-			file << "** Following grades have been awarded:" << std::endl;
-			file << "ID\tName\t\tDept\tExam\tExerc\tWork\tGRADE" << std::endl;
-		}
-	}
-}
-
-StudentFileWriter::~StudentFileWriter() {
-   file << std::endl << "**==--> End of batch <--==**" << std::endl;
-	if (file.is_open()) {
-		file.close();
-	}
-}
-
-void StudentFileWriter::write(const StudentDataItem * student) {
-   if (file.is_open()) {
-      file << *student;
+	/** The constructor initializes the object as well as writes the
+    header into the file, adding to whatever is already there.
+    @param fileName The file name where to write the student data.
+    */
+   StudentFileWriter::StudentFileWriter(const std::string & fileName) {
+      using std::chrono::system_clock;
+      if (fileName.length() > 0) {
+         file.open(fileName, std::ofstream::out | std::ofstream::app);
+         if (file.is_open()) {
+            system_clock::time_point today = system_clock::now();
+            std::time_t tt;
+            tt = system_clock::to_time_t ( today );
+            file << std::endl << std::endl;
+            file << "** Welcome to student register system" << std::endl;
+            file << "** (c) Antti Juustila, 2014-2017. University of Oulu, Finland." << std::endl;
+            file << "** Today is: " << ctime(&tt) << std::endl;
+            file << "** Following grades have been awarded:" << std::endl;
+            file << "ID\tName\t\tDept\tExam\tExerc\tWork\tGRADE" << std::endl;
+         }
+      }
    }
-}
+
+   /** The destructor writes the ending statements to the file and closes it. */
+   StudentFileWriter::~StudentFileWriter() {
+      file << std::endl << "**==--> End of batch <--==**" << std::endl;
+      if (file.is_open()) {
+         file.close();
+      }
+   }
+
+   /** The method writes the student data into the file using the operator <<().
+    @param student The student data to write into the file.
+    */
+   void StudentFileWriter::write(const StudentDataItem * student) {
+      if (file.is_open()) {
+         file << *student;
+      }
+   }
 
 
 } //namespace

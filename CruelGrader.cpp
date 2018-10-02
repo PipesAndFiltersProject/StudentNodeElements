@@ -11,26 +11,29 @@
 
 namespace OHARStudent {
 
-	
-int CruelGrader::calculate(const StudentDataItem & source) {
-   int grade = 0;
-   int examPoints = source.getExamPoints();
-   int exercisePoints = source.getExercisePoints();
-   int exerciseWorkPoints = source.getExerciseWorkPoints();
-   if (examPoints < 12) {
-      return grade; // failed
+	/** Calculates a final course grade for the student.
+    @param source The student to grade.
+    @returns The grade for the student.
+    */
+   int CruelGrader::calculate(const StudentDataItem & source) {
+      int grade = 0; // Assume failed; cruel eh?
+      int examPoints = source.getExamPoints();
+      int exercisePoints = source.getExercisePoints();
+      int exerciseWorkPoints = source.getExerciseWorkPoints();
+      if (examPoints < 12) {
+         return grade; // failed
+      }
+      if (examPoints >= 12 && examPoints <18) {
+         grade = 1;
+      } else {
+         grade = 2;
+      }
+      grade += ((exercisePoints / 2) + exerciseWorkPoints)/10;
+      if (grade >= 5) { // Cruel, eh?
+         grade = 4;
+      }
+      return grade;
    }
-   if (examPoints >= 12 && examPoints <18) {
-      grade = 1;
-   } else {
-      grade = 2;
-   }
-   grade += ((exercisePoints / 2) + exerciseWorkPoints)/10;
-   if (grade > 5) {
-      grade = 4;
-   }
-   return grade;
-}
 
 
 } //namespace

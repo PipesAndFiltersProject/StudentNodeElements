@@ -19,29 +19,41 @@
 namespace OHARStudent {
 
 
-StudentWriterHandler::StudentWriterHandler(OHARBase::ProcessorNode & myNode)
-: node(myNode), TAG("StudentWriterHandler")
-{
-   writer = new StudentFileWriter(node.getOutputFileName());
-}
+   /** Initializes the writer handler by creating the writer object. The file name
+    used to write the student data into, is gotten from the ProcessorNode configuration.
+    @param myNode The node where the handler is.
+    */
+   StudentWriterHandler::StudentWriterHandler(OHARBase::ProcessorNode & myNode)
+   : node(myNode), TAG("StudentWriterHandler")
+   {
+      writer = new StudentFileWriter(node.getOutputFileName());
+   }
 
-StudentWriterHandler::~StudentWriterHandler() {
-   delete writer;
-}
+   /** Deletes the writer, thus closing the file. */
+   StudentWriterHandler::~StudentWriterHandler() {
+      delete writer;
+   }
 
-bool StudentWriterHandler::consume(OHARBase::Package & data) {
-   OHARBase::Log::getInstance().entry(TAG, "Starting to write a package");
-	if (data.getType() == OHARBase::Package::Data) {
-      OHARBase::DataItem * item = data.getDataItem();
-      if (item) {
-         const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
-         if (student) {
-            writer->write(student);
+   /**
+    Consumes the data package containing the student data. Writes the student data into a file.
+    @param data The package containing the student data to write.
+    @returns Returns false, since there is no need to further manipulate the data. It is
+    assumed that writing the finished data into a file is the final step in student data processing
+    and further processing is not needed.
+    */
+   bool StudentWriterHandler::consume(OHARBase::Package & data) {
+      OHARBase::Log::getInstance().entry(TAG, "Starting to write a package");
+      if (data.getType() == OHARBase::Package::Data) {
+         OHARBase::DataItem * item = data.getDataItem();
+         if (item) {
+            const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
+            if (student) {
+               writer->write(student);
+            }
          }
       }
+      return false; // Don't let others handle this data package since it is now finally handled.
    }
-   return false; // Don't let others handle this data package since it is now passed along.
-}
 
 
 } //namespace

@@ -19,7 +19,9 @@ namespace OHARBase {
 
 namespace OHARStudent {
 	
-	
+	/** A handler for determining the final grade for the student,
+    based on how the student managed the various areas of the course.
+    */
 	class GradingHandler : public OHARBase::DataHandler {
 	public:
 		GradingHandler(OHARBase::ProcessorNode & myNode);
@@ -28,6 +30,7 @@ namespace OHARStudent {
 		bool consume(OHARBase::Package & data);
 		
 	private:
+      /** The ProcessorNode where this handler is residing in. */
 		OHARBase::ProcessorNode & node;
 		const std::string TAG;
 	};

@@ -13,11 +13,11 @@
 
 namespace OHARStudent {
 
-	
-class TheUsualGrader : public GradeCalculator {
-public:
-   int calculate(const StudentDataItem & source);
-};
+   /** One implementation for grading students */
+   class TheUsualGrader : public GradeCalculator {
+   public:
+      int calculate(const StudentDataItem & source);
+   };
 
 	
 } //namespace

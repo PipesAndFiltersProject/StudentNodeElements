@@ -15,20 +15,22 @@
 namespace OHARStudent {
 
 	
-class StudentDataItem;
+   class StudentDataItem;
 
-class StudentFileWriter {
-public:
-   StudentFileWriter(const std::string & fileName);
-   virtual ~StudentFileWriter();
-   
-   virtual void write(const StudentDataItem * student);
-   
-private:
-   
-   std::ofstream file;
-   
-};
+   /** A class for writing student data into a file.
+    */
+   class StudentFileWriter {
+   public:
+      StudentFileWriter(const std::string & fileName);
+      virtual ~StudentFileWriter();
+      
+      virtual void write(const StudentDataItem * student);
+      
+   private:
+      /** The output file stream to write into. */
+      std::ofstream file;
+      
+   };
 	
 	
 } //namespace
