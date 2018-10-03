@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__ExerciseInfoHandler__
 #define __PipesAndFiltersFramework__ExerciseInfoHandler__
 
-#include "DataHandler.h"
+#include <OHARBaseLayer/DataHandler.h>
 
 // Forward declaration
 namespace OHARBase {

@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 Antti Juustila. All rights reserved.
 //
 
+#include <OHARBaseLayer/ProcessorNode.h>
+#include <OHARBaseLayer/Log.h>
+#include <OHARBaseLayer/Package.h>
+
+#include "GraderFactory.h"
 #include "GradingHandler.h"
 #include "StudentDataItem.h"
-#include "ProcessorNode.h"
-#include "Log.h"
-#include "Package.h"
-#include "GraderFactory.h"
 
 namespace OHARStudent {
 

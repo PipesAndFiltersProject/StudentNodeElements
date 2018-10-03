@@ -9,8 +9,9 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 
+#include <OHARBaseLayer/Log.h>
+
 #include "StudentDataItem.h"
-#include "Log.h"
 #include "GradeCalculator.h"
 
 

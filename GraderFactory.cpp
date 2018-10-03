@@ -8,10 +8,11 @@
 
 #include <random>
 
+#include <OHARBaseLayer/Log.h>
+
 #include "GraderFactory.h"
 #include "TheUsualGrader.h"
 #include "CruelGrader.h"
-#include "Log.h"
 
 
 namespace OHARStudent {

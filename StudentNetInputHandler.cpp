@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Antti Juustila. All rights reserved.
 //
 
+#include <OHARBaseLayer/ProcessorNode.h>
+#include <OHARBaseLayer/Log.h>
+#include <OHARBaseLayer/Package.h>
+
 #include "StudentNetInputHandler.h"
 #include "StudentDataItem.h"
-#include "ProcessorNode.h"
-#include "Log.h"
-#include "Package.h"
 
 namespace OHARStudent {
 	

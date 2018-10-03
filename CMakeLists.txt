@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(OHARStudentLayer)
-include_directories(/usr/local/include /usr/local/include/OHARBaseLayer)
 set(CMAKE_CXX_FLAGS "-fPIC -g -Wall -std=c++11 ${CMAKE_CXX_FLAGS}")
 add_library(${PROJECT_NAME} STATIC CruelGrader.cpp PlainStudentFileHandler.cpp StudentFileWriter.cpp StudentNetOutputHandler.cpp GraderFactory.cpp StudentDataItem.cpp StudentHandler.cpp StudentWriterHandler.cpp GradingHandler.cpp StudentFileReader.cpp StudentNetInputHandler.cpp TheUsualGrader.cpp)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "CruelGrader.h;PlainStudentFileHandler.h;StudentHandler.h;TheUsualGrader.h;GradeCalculator.h;StudentDataItem.h;StudentNetInputHandler.h;GraderFactory.h;StudentFileReader.h;StudentNetOutputHandler.h;GradingHandler.h;StudentFileWriter.h;StudentWriterHandler.h")
 find_library(BOOSTS boost_system REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${BOOSTS})
 install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION lib LIBRARY DESTINATION lib PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
-

@@ -8,11 +8,12 @@
 
 #include <sstream>
 
+#include <OHARBaseLayer/ProcessorNode.h>
+#include <OHARBaseLayer/Log.h>
+#include <OHARBaseLayer/Package.h>
+
 #include "StudentNetOutputHandler.h"
 #include "StudentDataItem.h"
-#include "ProcessorNode.h"
-#include "Log.h"
-#include "Package.h"
 
 
 namespace OHARStudent {

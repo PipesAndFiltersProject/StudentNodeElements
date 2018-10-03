@@ -11,8 +11,8 @@
 
 #include <list>
 
-#include "DataHandler.h"
-#include "DataReaderObserver.h"
+#include <OHARBaseLayer/DataHandler.h>
+#include <OHARBaseLayer/DataReaderObserver.h>
 
 
 namespace OHARBase {
