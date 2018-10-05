@@ -36,7 +36,7 @@ namespace OHARStudent {
     @return Returns true if package was handled, otherwise returns false.
     */
 	bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
-		OHARBase::Log::getInstance().entry(TAG, "Starting to send a package");
+		OHARBase::Log::get().entry(TAG, "Starting to send a package");
 		if (data.getType() == OHARBase::Package::Data) {
 			OHARBase::DataItem * item = data.getDataItem();
          // If the package contains the binary data object...
@@ -45,7 +45,7 @@ namespace OHARStudent {
             // ...and it was a student data item object...
 				if (student) {
                // ...stream the data into a string payload...
-					OHARBase::Log::getInstance().entry(TAG, "It is a student so creating payload");
+					OHARBase::Log::get().entry(TAG, "It is a student so creating payload");
 					std::stringstream stream;
 					std::string payload;
 					stream << *(student);
@@ -54,7 +54,7 @@ namespace OHARStudent {
 					data.setData(payload);
                // ... and erase the binary data item from the Package...
 					data.setDataItem(0);
-					OHARBase::Log::getInstance().entry(TAG, "And telling the processornode to send.");
+					OHARBase::Log::get().entry(TAG, "And telling the processornode to send.");
                // ... and ask the Node to send the data to the next Node.
 					node.sendData(data);
 				}

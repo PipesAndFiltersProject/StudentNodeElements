@@ -59,15 +59,15 @@ namespace OHARStudent {
     */
    void PlainStudentFileHandler::handleNewItem(OHARBase::DataItem * item) {
       // Check if the item is already in the container.
-      OHARBase::Log::getInstance().entry(TAG, "One new file data item received");
+      OHARBase::Log::get().entry(TAG, "One new file data item received");
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
       if (newStudent) {
-         OHARBase::Log::getInstance().entry(TAG, "Creating a package to send ahead...");
+         OHARBase::Log::get().entry(TAG, "Creating a package to send ahead...");
          OHARBase::Package p;
          p.setType(OHARBase::Package::Data);
          p.setDataItem(newStudent);
          delete newStudent;
-         OHARBase::Log::getInstance().entry(TAG, "Pass to next handler.");
+         OHARBase::Log::get().entry(TAG, "Pass to next handler.");
          node.passToNextHandlers(this, p);
       }
    }

@@ -95,9 +95,9 @@ void StudentDataItem::setExerciseWorkPoints(int pts) {
 void StudentDataItem::calculateGrade() {
    if (calculator) {
       grade = calculator->calculate(*this);
-      OHARBase::Log::getInstance().entry(TAG, "Calculated grade %d for the student", grade);
+      OHARBase::Log::get().entry(TAG, "Calculated grade %d for the student", grade);
    } else {
-      OHARBase::Log::getInstance().entry(TAG, "No calculator to grade!!");
+      OHARBase::Log::get().entry(TAG, "No calculator to grade!!");
    }
 }
 
@@ -105,7 +105,7 @@ void StudentDataItem::calculateGrade() {
 bool StudentDataItem::parse(const std::string & fromString, const std::string & contentType) {
    std::vector<std::string> strings;
    boost::split(strings, fromString, boost::is_any_of("\t"));
-   OHARBase::Log::getInstance().entry(TAG, "String item count: %d", strings.size());
+   OHARBase::Log::get().entry(TAG, "String item count: %d", strings.size());
    if (contentType == "summarydata") {
       setId(strings.at(0));
       setName(strings.at(1));
