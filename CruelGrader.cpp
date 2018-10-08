@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Antti Juustila. All rights reserved.
 //
 
-#include "CruelGrader.h"
-#include "StudentDataItem.h"
+#include <OHARStudentLayer/CruelGrader.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 namespace OHARStudent {
 

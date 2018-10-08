@@ -10,8 +10,8 @@
 #include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
-#include "StudentNetInputHandler.h"
-#include "StudentDataItem.h"
+#include <OHARStudentLayer/StudentNetInputHandler.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 namespace OHARStudent {
 	

@@ -8,7 +8,7 @@
 
 #include <random>
 
-#include "TheUsualGrader.h"
+#include <OHARStudentLayer/TheUsualGrader.h>
 
 namespace OHARStudent {
 

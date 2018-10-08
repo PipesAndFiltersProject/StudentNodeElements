@@ -11,8 +11,8 @@
 
 #include <OHARBaseLayer/Log.h>
 
-#include "StudentDataItem.h"
-#include "GradeCalculator.h"
+#include <OHARStudentLayer/StudentDataItem.h>
+#include <OHARStudentLayer/GradeCalculator.h>
 
 
 namespace OHARStudent {

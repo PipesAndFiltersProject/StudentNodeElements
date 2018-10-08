@@ -9,8 +9,8 @@
 
 #include <OHARBaseLayer/Log.h>
 
-#include "StudentFileReader.h"
-#include "StudentDataItem.h"
+#include <OHARStudentLayer/StudentFileReader.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 
 namespace OHARStudent {

@@ -8,8 +8,8 @@
 
 #include <chrono>
 
-#include "StudentFileWriter.h"
-#include "StudentDataItem.h"
+#include <OHARStudentLayer/StudentFileWriter.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 
 namespace OHARStudent {

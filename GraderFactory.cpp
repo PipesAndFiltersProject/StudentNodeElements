@@ -10,9 +10,9 @@
 
 #include <OHARBaseLayer/Log.h>
 
-#include "GraderFactory.h"
-#include "TheUsualGrader.h"
-#include "CruelGrader.h"
+#include <OHARStudentLayer/GraderFactory.h>
+#include <OHARStudentLayer/TheUsualGrader.h>
+#include <OHARStudentLayer/CruelGrader.h>
 
 
 namespace OHARStudent {

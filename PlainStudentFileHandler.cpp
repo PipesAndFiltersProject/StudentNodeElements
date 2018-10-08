@@ -13,9 +13,9 @@
 #include <OHARBaseLayer/Package.h>
 #include <OHARBaseLayer/Log.h>
 
-#include "PlainStudentFileHandler.h"
-#include "StudentDataItem.h"
-#include "StudentFileReader.h"
+#include <OHARStudentLayer/PlainStudentFileHandler.h>
+#include <OHARStudentLayer/StudentDataItem.h>
+#include <OHARStudentLayer/StudentFileReader.h>
 
 
 namespace OHARStudent {

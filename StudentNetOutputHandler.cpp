@@ -12,8 +12,8 @@
 #include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
-#include "StudentNetOutputHandler.h"
-#include "StudentDataItem.h"
+#include <OHARStudentLayer/StudentNetOutputHandler.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 
 namespace OHARStudent {
