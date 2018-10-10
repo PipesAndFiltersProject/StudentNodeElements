@@ -35,18 +35,22 @@ namespace OHARStudent {
       bool addFrom(const OHARBase::DataItem & another);
 
       const std::string & getName() const;
-      const std::string & getDept() const;
+      const std::string & getStudyProgram() const;
       int getExamPoints() const;
       int getExercisePoints() const;
-      int getExerciseWorkPoints() const;
+      int getCourseProjectPoints() const;
       int getGrade() const;
       
       void setName(const std::string & theName);
-      void setDept(const std::string & theDept);
+      void setStudyProgram(const std::string & theDept);
       void setExamPoints(int pts);
       void setExercisePoints(int pts);
-      void setExerciseWorkPoints(int pts);
-      
+      void setCourseProjectPoints(int pts);
+      /**
+       Grade is calculated so use calculateGrade to determine it and use this method only for externalizing (to/from file or network using json).
+       @param g The grade value, from 0-5 (zero being failed).
+       */
+      void setGrade(int g);
       void calculateGrade();
       
       bool operator == (const StudentDataItem & item) const;
@@ -66,7 +70,7 @@ namespace OHARStudent {
       /** The points student got from participating in exercises. */
       int         exercisePoints;
       /** The points student got from the exercise work. */
-      int         exerciseWorkPoints;
+      int         courseProjectPoints;
       /** The final grade student gets from the course. */
       int         grade;
       

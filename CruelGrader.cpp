@@ -19,7 +19,7 @@ namespace OHARStudent {
       int grade = 0; // Assume failed; cruel eh?
       int examPoints = source.getExamPoints();
       int exercisePoints = source.getExercisePoints();
-      int exerciseWorkPoints = source.getExerciseWorkPoints();
+      int exerciseWorkPoints = source.getCourseProjectPoints();
       if (examPoints < 12) {
          return grade; // failed
       }

@@ -14,14 +14,62 @@
 #include <OHARStudentLayer/StudentDataItem.h>
 #include <OHARStudentLayer/GradeCalculator.h>
 
+#include <nlohmann/json.hpp>
 
 namespace OHARStudent {
 
-	
+   void to_json(nlohmann::json & j, const StudentDataItem & student) {
+      // Only id is required, all other elements are optional.
+      j = nlohmann::json{{"id", student.getId()}};
+      
+      // Default values are empty strings and -1, so if the default values are there,
+      // put nothing to json for that data element.
+      if (student.getName().length() > 0) {
+         j["name"] = student.getName();
+      }
+      if (student.getStudyProgram().length() > 0) {
+         j["studyprogram"] = student.getStudyProgram();
+      }
+      if (student.getExamPoints() >= 0) {
+         j["exampoints"] = student.getExamPoints();
+      }
+      if (student.getExercisePoints() >= 0) {
+         j["exercisepoints"] = student.getExercisePoints();
+      }
+      if (student.getCourseProjectPoints() >= 0) {
+         j["courseprojectpoints"] = student.getCourseProjectPoints();
+      }
+      if (student.getGrade() >= 0) {
+         j["grade"] = student.getGrade();
+      }
+   }
+   
+   void from_json(const nlohmann::json & j, StudentDataItem & student) {
+      student.setId(j.at("id"));
+      if (j.find("name") != j.end()) {
+         student.setName(j.at("name"));
+      }
+      if (j.find("studyprogram") != j.end()) {
+         student.setStudyProgram(j.at("studyprogram"));
+      }
+      if (j.find("exampoints") != j.end()) {
+         student.setExamPoints(j.at("exampoints"));
+      }
+      if (j.find("exercisepoints") != j.end()) {
+         student.setExamPoints(j.at("exercisepoints"));
+      }
+      if (j.find("courseprojectpoints") != j.end()) {
+         student.setCourseProjectPoints(j.at("courseprojectpoints"));
+      }
+      if (j.find("grade") != j.end()) {
+         student.setGrade(j.at("grade"));
+      }
+   }
+   
 GradeCalculator * StudentDataItem::calculator = 0;
 
 StudentDataItem::StudentDataItem()
-: examPoints(-1), exercisePoints(-1), exerciseWorkPoints(-1),
+: examPoints(-1), exercisePoints(-1), courseProjectPoints(-1),
   grade(-1), TAG("SDataItem")
 {
 }
@@ -29,7 +77,7 @@ StudentDataItem::StudentDataItem()
 StudentDataItem::StudentDataItem(const StudentDataItem & another)
 : OHARBase::DataItem(another), name(another.name), department(another.department),
   examPoints(another.examPoints), exercisePoints(another.exercisePoints),
-  exerciseWorkPoints(another.exerciseWorkPoints), grade(another.grade),
+  courseProjectPoints(another.courseProjectPoints), grade(another.grade),
   TAG("SDataItem")
 {
    
@@ -46,7 +94,7 @@ const std::string & StudentDataItem::getName() const {
    return name;
 }
 
-const std::string & StudentDataItem::getDept() const {
+const std::string & StudentDataItem::getStudyProgram() const {
    return department;
 }
 
@@ -58,8 +106,8 @@ int StudentDataItem::getExercisePoints() const {
    return exercisePoints;
 }
 
-int StudentDataItem::getExerciseWorkPoints() const {
-   return exerciseWorkPoints;
+int StudentDataItem::getCourseProjectPoints() const {
+   return courseProjectPoints;
 }
 
 void StudentDataItem::setGradeCalculator(GradeCalculator * calc) {
@@ -76,7 +124,7 @@ void StudentDataItem::setName(const std::string & theName) {
    name = theName;
 }
 
-void StudentDataItem::setDept(const std::string & theDept) {
+void StudentDataItem::setStudyProgram(const std::string & theDept) {
    department = theDept;
 }
 
@@ -88,8 +136,8 @@ void StudentDataItem::setExercisePoints(int pts) {
    exercisePoints = pts;
 }
 
-void StudentDataItem::setExerciseWorkPoints(int pts) {
-   exerciseWorkPoints = pts;
+void StudentDataItem::setCourseProjectPoints(int pts) {
+   courseProjectPoints = pts;
 }
 
 void StudentDataItem::calculateGrade() {
@@ -109,15 +157,15 @@ bool StudentDataItem::parse(const std::string & fromString, const std::string & 
    if (contentType == "summarydata") {
       setId(strings.at(0));
       setName(strings.at(1));
-      setDept(strings.at(2));
+      setStudyProgram(strings.at(2));
       setExamPoints(std::stoi(strings.at(3)));
       setExercisePoints(std::stoi(strings.at(4)));
-      setExerciseWorkPoints(std::stoi(strings.at(5)));
+      setCourseProjectPoints(std::stoi(strings.at(5)));
       return true;
    } else if (contentType == "studentdata") {
       setId(strings.at(0));
       setName(strings.at(1));
-      setDept(strings.at(2));
+      setStudyProgram(strings.at(2));
       return true;
    } else if (contentType == "exercisedata") {
       setId(strings.at(0));
@@ -128,7 +176,7 @@ bool StudentDataItem::parse(const std::string & fromString, const std::string & 
       return true;
    } else if (contentType == "exerciseworkdata") {
       setId(strings.at(0));
-      setExerciseWorkPoints(std::stoi(strings.at(1)));
+      setCourseProjectPoints(std::stoi(strings.at(1)));
       return true;
    } else if (contentType == "examdata") {
       setId(strings.at(0));
@@ -156,8 +204,8 @@ bool StudentDataItem::addFrom(const OHARBase::DataItem & another) {
          if (this->exercisePoints < 0) {
             this->exercisePoints = item->exercisePoints;
          }
-         if (this->exerciseWorkPoints < 0) {
-            this->exerciseWorkPoints = item->exerciseWorkPoints;
+         if (this->courseProjectPoints < 0) {
+            this->courseProjectPoints = item->courseProjectPoints;
          }
          if (this->grade < 0) {
             this->grade = item->grade;
@@ -178,9 +226,9 @@ bool StudentDataItem::operator != (const StudentDataItem & item) const {
 
 
 std::ostream & operator << (std::ostream & ostr, const StudentDataItem & item) {
-   ostr << item.getId() << "\t" << item.getName() << "\t" << item.getDept()
+   ostr << item.getId() << "\t" << item.getName() << "\t" << item.getStudyProgram()
       << "\t" << item.getExamPoints() << "\t" << item.getExercisePoints()
-      << "\t" << item.getExerciseWorkPoints() << "\t" << item.getGrade() << std::endl;
+      << "\t" << item.getCourseProjectPoints() << "\t" << item.getGrade() << std::endl;
    return ostr;
 }
 	
