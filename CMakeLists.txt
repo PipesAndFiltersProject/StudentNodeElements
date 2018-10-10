@@ -7,7 +7,7 @@ include(CMakePackageConfigHelpers)
 find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
 find_package(OHARBaseLayer CONFIG REQUIRED)
 if (Boost_FOUND AND OHARBaseLayer_FOUND)
-   add_library(${LIB_NAME} STATIC CruelGrader.cpp PlainStudentFileHandler.cpp StudentFileWriter.cpp StudentNetOutputHandler.cpp GraderFactory.cpp StudentDataItem.cpp StudentHandler.cpp StudentWriterHandler.cpp GradingHandler.cpp StudentFileReader.cpp StudentNetInputHandler.cpp TheUsualGrader.cpp jsoncpp.cpp include/${LIB_NAME}/CruelGrader.h include/${LIB_NAME}/GradeCalculator.h
+   add_library(${LIB_NAME} STATIC CruelGrader.cpp PlainStudentFileHandler.cpp StudentFileWriter.cpp StudentNetOutputHandler.cpp GraderFactory.cpp StudentDataItem.cpp StudentHandler.cpp StudentWriterHandler.cpp GradingHandler.cpp StudentFileReader.cpp StudentNetInputHandler.cpp TheUsualGrader.cpp include/${LIB_NAME}/CruelGrader.h include/${LIB_NAME}/GradeCalculator.h
       include/${LIB_NAME}/GraderFactory.h include/${LIB_NAME}/GradingHandler.h include/${LIB_NAME}/PlainStudentFileHandler.h
       include/${LIB_NAME}/StudentDataItem.h include/${LIB_NAME}/StudentFileReader.h include/${LIB_NAME}/StudentFileWriter.h
       include/${LIB_NAME}/StudentHandler.h include/${LIB_NAME}/StudentNetInputHandler.h include/${LIB_NAME}/StudentNetOutputHandler.h
