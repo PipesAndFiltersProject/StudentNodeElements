@@ -27,10 +27,10 @@ namespace OHARStudent {
       int dice_roll = distribution(generator);
       
       if (dice_roll == 0) {
-         OHARBase::Log::get().entry("GradeFactory", "Created the usual grader.");
+         LOG_INFO("GradeFactory", "Created the usual grader.");
          return new TheUsualGrader();
       }
-      OHARBase::Log::get().entry("GradeFactory", "Created the cruel grader :/");
+      LOG_INFO("GradeFactory", "Created the cruel grader :/");
       return new CruelGrader();
    }
 

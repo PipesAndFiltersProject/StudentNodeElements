@@ -44,7 +44,7 @@ namespace OHARStudent {
          if (item) {
             StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
             if (student) {
-               OHARBase::Log::get().entry(TAG, "Calculating a grade for the student.");
+               LOG_INFO(TAG, "Calculating a grade for the student " << student->getName());
                student->calculateGrade();
             }
          }

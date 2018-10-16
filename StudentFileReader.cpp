@@ -34,9 +34,9 @@ namespace OHARStudent {
    OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
       std::unique_ptr<StudentDataItem> itemPtr(new StudentDataItem());
       if (str.length() > 0) {
-         OHARBase::Log::get().entry(TAG, "Parsing line: %s", str.c_str());
+         LOG_INFO(TAG, "Parsing string " << str.substr(0,15) << "...");
          if (!itemPtr->parse(str, contentType)) {
-            OHARBase::Log::get().entry(TAG, "SDataItem failed to parse!");
+            LOG_ERROR(TAG, "StudentDataItem failed to parse string!");
             return nullptr;
          }
       }

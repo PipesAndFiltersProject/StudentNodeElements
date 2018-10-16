@@ -139,18 +139,23 @@ void StudentDataItem::setExercisePoints(int pts) {
 void StudentDataItem::setCourseProjectPoints(int pts) {
    courseProjectPoints = pts;
 }
+   
+void StudentDataItem::setGrade(int g) {
+   grade = g;
+}
 
 void StudentDataItem::calculateGrade() {
    if (calculator) {
       grade = calculator->calculate(*this);
-      OHARBase::Log::get().entry(TAG, "Calculated grade %d for the student", grade);
+      LOG_INFO(TAG, "Calculated grade %d for the student " << grade);
    } else {
-      OHARBase::Log::get().entry(TAG, "No calculator to grade!!");
+      LOG_INFO(TAG, "No calculator provided for grading!!");
    }
 }
 
 
 bool StudentDataItem::parse(const std::string & fromString, const std::string & contentType) {
+   // TODO: change logs to use macros LOG_INFO etc when reimplementing using json.
    std::vector<std::string> strings;
    boost::split(strings, fromString, boost::is_any_of("\t"));
    OHARBase::Log::get().entry(TAG, "String item count: %d", strings.size());

@@ -43,7 +43,7 @@ namespace OHARStudent {
 	bool StudentNetInputHandler::consume(OHARBase::Package & data) {
 		using namespace OHARBase;
 		if (data.getType() == Package::Data && data.getData().length() > 0) {
-			Log::get().entry(TAG, "** data received, handling! **");
+         LOG_INFO(TAG, "** data received, handling! **");
 			// parse data to a student data object
 			StudentDataItem * item = new StudentDataItem;
 			if (item->parse(data.getData(), "summarydata")) {

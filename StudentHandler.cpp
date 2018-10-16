@@ -57,16 +57,16 @@ namespace OHARStudent {
          if (item) {
             StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
             if (newStudent) {
-               OHARBase::Log::get().entry(TAG, "Consuming data from network");
+               LOG_INFO(TAG, "Consuming data from network");
                StudentDataItem * containerStudent = findStudent(*newStudent);
                if (containerStudent) {
-                  OHARBase::Log::get().entry(TAG, "Student data from file & net merged now.");
+                  LOG_INFO(TAG, "Student data from file & net merged now. " << containerStudent->getName());
                   newStudent->addFrom(*containerStudent);
                   dataItems.remove(containerStudent);
                   delete containerStudent;
                   node.passToNextHandlers(this, data);
                } else {
-                  OHARBase::Log::get().entry(TAG, "No matching student data from file yet, hold it in container.");
+                  LOG_INFO(TAG, "No matching student data from file yet, hold it in container.");
                   dataItems.push_back(newStudent->copy());
                   retval = true; // consumed the item and keeping it until additional data found.
                }
@@ -89,11 +89,11 @@ namespace OHARStudent {
     */
    void StudentHandler::handleNewItem(OHARBase::DataItem * item) {
       // Check if the item is already in the container.
-      OHARBase::Log::get().entry(TAG, "One new data item from file");
+      LOG_INFO(TAG, "One new data item from file");
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
       StudentDataItem * containerStudent = findStudent(*newStudent);
       if (containerStudent) {
-         OHARBase::Log::get().entry(TAG, "Student already in container, combine and pass on!");
+         LOG_INFO(TAG, "Student already in container, combine and pass on! " << containerStudent->getName());
          newStudent->addFrom(*containerStudent);
          OHARBase::Package p;
          p.setType(OHARBase::Package::Data);
@@ -102,7 +102,7 @@ namespace OHARStudent {
          delete containerStudent;
          node.passToNextHandlers(this, p);
       } else {
-         OHARBase::Log::get().entry(TAG, "No matching student data from network, hold it in container.");
+         LOG_INFO(TAG, "No matching student data from network, hold it in container. " << containerStudent->getName());
          dataItems.push_back(newStudent);
       }
    }
