@@ -61,6 +61,7 @@ namespace OHARStudent {
 			}
 			return true; // data consumed, sent away. No need to pass along anymore.
 		} else if (data.getType() == OHARBase::Package::Control)  {
+         LOG_INFO(TAG, "Forwarding a command: " << data.getData());
 			node.sendData(data);
 			return true;
 		}

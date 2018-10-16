@@ -147,7 +147,7 @@ void StudentDataItem::setGrade(int g) {
 void StudentDataItem::calculateGrade() {
    if (calculator) {
       grade = calculator->calculate(*this);
-      LOG_INFO(TAG, "Calculated grade %d for the student " << grade);
+      LOG_INFO(TAG, "Calculated grade for the student: " << grade);
    } else {
       LOG_INFO(TAG, "No calculator provided for grading!!");
    }
