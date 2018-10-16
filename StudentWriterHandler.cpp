@@ -43,7 +43,7 @@ namespace OHARStudent {
     and further processing is not needed.
     */
    bool StudentWriterHandler::consume(OHARBase::Package & data) {
-      OHARBase::Log::get().entry(TAG, "Starting to write a package");
+      LOG_INFO(TAG, "Starting to write a package");
       if (data.getType() == OHARBase::Package::Data) {
          OHARBase::DataItem * item = data.getDataItem();
          if (item) {

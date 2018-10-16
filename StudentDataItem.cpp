@@ -158,7 +158,7 @@ bool StudentDataItem::parse(const std::string & fromString, const std::string & 
    // TODO: change logs to use macros LOG_INFO etc when reimplementing using json.
    std::vector<std::string> strings;
    boost::split(strings, fromString, boost::is_any_of("\t"));
-   OHARBase::Log::get().entry(TAG, "String item count: %d", strings.size());
+   LOG_INFO(TAG, "String item count: " << strings.size());
    if (contentType == "summarydata") {
       setId(strings.at(0));
       setName(strings.at(1));
