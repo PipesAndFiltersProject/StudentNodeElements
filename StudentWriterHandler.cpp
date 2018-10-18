@@ -8,8 +8,9 @@
 
 #include <sstream>
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
 #include <OHARStudentLayer/StudentDataItem.h>
@@ -25,7 +26,7 @@ namespace OHARStudent {
     @param myNode The node where the handler is.
     */
    StudentWriterHandler::StudentWriterHandler(OHARBase::ProcessorNode & myNode)
-   : node(myNode), TAG("StudentWriterHandler")
+   : node(myNode), TAG("SWriterHandler ")
    {
       writer = new StudentFileWriter(node.getOutputFileName());
    }
@@ -43,13 +44,14 @@ namespace OHARStudent {
     and further processing is not needed.
     */
    bool StudentWriterHandler::consume(OHARBase::Package & data) {
-      LOG_INFO(TAG, "Starting to write a package");
+      LOG(INFO) << TAG << "Starting to write a package to a file";
       if (data.getType() == OHARBase::Package::Data) {
          OHARBase::DataItem * item = data.getDataItem();
          if (item) {
             const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
             if (student) {
                writer->write(student);
+               node.showUIMessage("Wrote data to file for student " + student->getName());
             }
          }
       }

@@ -8,9 +8,10 @@
 
 #include <sstream>
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
 #include <OHARBaseLayer/Package.h>
-#include <OHARBaseLayer/Log.h>
 
 #include <OHARStudentLayer/StudentHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
@@ -21,7 +22,7 @@ namespace OHARStudent {
 
 	
    StudentHandler::StudentHandler(OHARBase::ProcessorNode & myNode)
-   : node(myNode), TAG("StudentHandler")
+   : node(myNode), TAG("StudentHandler ")
    {
    }
 
@@ -57,16 +58,19 @@ namespace OHARStudent {
          if (item) {
             StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
             if (newStudent) {
-               LOG_INFO(TAG, "Consuming data from network");
+               node.showUIMessage("Got student data for " + newStudent->getName());
+               LOG(INFO) << TAG << "Consuming data from network";
                StudentDataItem * containerStudent = findStudent(*newStudent);
                if (containerStudent) {
-                  LOG_INFO(TAG, "Student data from file & net merged now. " << containerStudent->getName());
+                  LOG(INFO) << TAG << "Student data from file & net merged now. " << containerStudent->getName();
+                  node.showUIMessage("Found local student data, merging with received data.");
                   newStudent->addFrom(*containerStudent);
                   dataItems.remove(containerStudent);
                   delete containerStudent;
                   node.passToNextHandlers(this, data);
                } else {
-                  LOG_INFO(TAG, "No matching student data from file yet, hold it in container.");
+                  LOG(INFO) << TAG << "No matching student data from file yet, hold it in container.";
+                  node.showUIMessage("No local data for this student, waiting for it");
                   dataItems.push_back(newStudent->copy());
                   retval = true; // consumed the item and keeping it until additional data found.
                }
@@ -89,11 +93,13 @@ namespace OHARStudent {
     */
    void StudentHandler::handleNewItem(OHARBase::DataItem * item) {
       // Check if the item is already in the container.
-      LOG_INFO(TAG, "One new data item from file");
+      LOG(INFO) << TAG << "One new data item from file";
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
+      node.showUIMessage("Student data read from file for " + newStudent->getName());
       StudentDataItem * containerStudent = findStudent(*newStudent);
       if (containerStudent) {
-         LOG_INFO(TAG, "Student already in container, combine and pass on! " << containerStudent->getName());
+         node.showUIMessage("Had received same student data from previous node, combining.");
+         LOG(INFO) << TAG << "Student already in container, combine and pass on! " << containerStudent->getName();
          newStudent->addFrom(*containerStudent);
          OHARBase::Package p;
          p.setType(OHARBase::Package::Data);
@@ -102,7 +108,8 @@ namespace OHARStudent {
          delete containerStudent;
          node.passToNextHandlers(this, p);
       } else {
-         LOG_INFO(TAG, "No matching student data from network, hold it in container. " << containerStudent->getName());
+         node.showUIMessage("Have not yet got data for this student from previous node, holding data.");
+         LOG(INFO) << TAG << "No matching student data from network, hold it in container. " << containerStudent->getName();
          dataItems.push_back(newStudent);
       }
    }

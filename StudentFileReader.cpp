@@ -7,7 +7,7 @@
 //
 
 
-#include <OHARBaseLayer/Log.h>
+#include <g3log/g3log.hpp>
 
 #include <OHARStudentLayer/StudentFileReader.h>
 #include <OHARStudentLayer/StudentDataItem.h>
@@ -17,7 +17,7 @@ namespace OHARStudent {
 
 	
    StudentFileReader::StudentFileReader(OHARBase::DataReaderObserver & obs)
-   : OHARBase::DataFileReader(obs), TAG("SFileReader") {
+   : OHARBase::DataFileReader(obs), TAG("SFileReader ") {
       
    }
 
@@ -34,9 +34,9 @@ namespace OHARStudent {
    OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
       std::unique_ptr<StudentDataItem> itemPtr(new StudentDataItem());
       if (str.length() > 0) {
-         LOG_INFO(TAG, "Parsing string " << str.substr(0,15) << "...");
+         LOG(INFO) << TAG << "Parsing string " << str.substr(0,15) << "...";
          if (!itemPtr->parse(str, contentType)) {
-            LOG_ERROR(TAG, "StudentDataItem failed to parse string!");
+            LOG(WARNING) << TAG << "StudentDataItem failed to parse string!";
             return nullptr;
          }
       }

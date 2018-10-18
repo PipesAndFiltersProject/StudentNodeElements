@@ -8,7 +8,7 @@
 
 #include <random>
 
-#include <OHARBaseLayer/Log.h>
+#include <g3log/g3log.hpp>
 
 #include <OHARStudentLayer/GraderFactory.h>
 #include <OHARStudentLayer/TheUsualGrader.h>
@@ -27,10 +27,10 @@ namespace OHARStudent {
       int dice_roll = distribution(generator);
       
       if (dice_roll == 0) {
-         LOG_INFO("GradeFactory", "Created the usual grader.");
+         LOG(INFO) << "GradeFactory" << "Created the usual grader.";
          return new TheUsualGrader();
       }
-      LOG_INFO("GradeFactory", "Created the cruel grader :/");
+      LOG(INFO) << "GradeFactory" << "Created the cruel grader :/";
       return new CruelGrader();
    }
 

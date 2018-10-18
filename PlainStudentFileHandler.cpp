@@ -9,9 +9,10 @@
 
 #include <sstream>
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
 #include <OHARBaseLayer/Package.h>
-#include <OHARBaseLayer/Log.h>
 
 #include <OHARStudentLayer/PlainStudentFileHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
@@ -22,7 +23,7 @@ namespace OHARStudent {
 
 	
    PlainStudentFileHandler::PlainStudentFileHandler(OHARBase::ProcessorNode & myNode)
-   : node(myNode), TAG("PlainFileHandler")
+   : node(myNode), TAG("SPlainFileHandler ")
    {
    }
 
@@ -59,15 +60,15 @@ namespace OHARStudent {
     */
    void PlainStudentFileHandler::handleNewItem(OHARBase::DataItem * item) {
       // Check if the item is already in the container.
-      LOG_INFO(TAG, "One new file data item received");
+      LOG(INFO) << TAG << "One new file data item received";
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
       if (newStudent) {
-         LOG_INFO(TAG, "Creating a package to send ahead...");
+         LOG(INFO) << TAG << "Creating a package...";
          OHARBase::Package p;
          p.setType(OHARBase::Package::Data);
          p.setDataItem(newStudent);
          delete newStudent;
-         LOG_INFO(TAG, "Pass to next handler.");
+         LOG(INFO) << TAG << "... to pass to next handler.";
          node.passToNextHandlers(this, p);
       }
    }

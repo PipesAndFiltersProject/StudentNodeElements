@@ -9,7 +9,7 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 
-#include <OHARBaseLayer/Log.h>
+#include <g3log/g3log.hpp>
 
 #include <OHARStudentLayer/StudentDataItem.h>
 #include <OHARStudentLayer/GradeCalculator.h>
@@ -70,7 +70,7 @@ GradeCalculator * StudentDataItem::calculator = 0;
 
 StudentDataItem::StudentDataItem()
 : examPoints(-1), exercisePoints(-1), courseProjectPoints(-1),
-  grade(-1), TAG("SDataItem")
+  grade(-1), TAG("SDataItem ")
 {
 }
 
@@ -78,7 +78,7 @@ StudentDataItem::StudentDataItem(const StudentDataItem & another)
 : OHARBase::DataItem(another), name(another.name), department(another.department),
   examPoints(another.examPoints), exercisePoints(another.exercisePoints),
   courseProjectPoints(another.courseProjectPoints), grade(another.grade),
-  TAG("SDataItem")
+  TAG("SDataItem ")
 {
    
 }
@@ -147,9 +147,9 @@ void StudentDataItem::setGrade(int g) {
 void StudentDataItem::calculateGrade() {
    if (calculator) {
       grade = calculator->calculate(*this);
-      LOG_INFO(TAG, "Calculated grade for the student: " << grade);
+      LOG(INFO) << TAG << "Calculated grade for the student: " << grade;
    } else {
-      LOG_INFO(TAG, "No calculator provided for grading!!");
+      LOG(WARNING) << TAG << "No calculator provided for grading!!";
    }
 }
 
@@ -158,7 +158,7 @@ bool StudentDataItem::parse(const std::string & fromString, const std::string & 
    // TODO: change logs to use macros LOG_INFO etc when reimplementing using json.
    std::vector<std::string> strings;
    boost::split(strings, fromString, boost::is_any_of("\t"));
-   LOG_INFO(TAG, "String item count: " << strings.size());
+   LOG(INFO) << TAG << "Parsing student string; item count: " << strings.size();
    if (contentType == "summarydata") {
       setId(strings.at(0));
       setName(strings.at(1));

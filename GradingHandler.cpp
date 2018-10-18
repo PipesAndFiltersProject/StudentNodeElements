@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Antti Juustila. All rights reserved.
 //
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
 #include <OHARStudentLayer/GraderFactory.h>
@@ -44,7 +45,7 @@ namespace OHARStudent {
          if (item) {
             StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
             if (student) {
-               LOG_INFO(TAG, "Calculating a grade for the student " << student->getName());
+               LOG(INFO) << TAG << "Calculating a grade for the student " << student->getName();
                student->calculateGrade();
             }
          }

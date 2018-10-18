@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Antti Juustila. All rights reserved.
 //
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
 #include <OHARStudentLayer/StudentNetInputHandler.h>
@@ -15,7 +16,7 @@
 
 namespace OHARStudent {
 	
-	const std::string StudentNetInputHandler::TAG = "NetInputHandler";
+	const std::string StudentNetInputHandler::TAG = "SNetInputHandler ";
 	
 	/** Default constructor, does nothing. */
 	StudentNetInputHandler::StudentNetInputHandler()
@@ -43,7 +44,7 @@ namespace OHARStudent {
 	bool StudentNetInputHandler::consume(OHARBase::Package & data) {
 		using namespace OHARBase;
 		if (data.getType() == Package::Data && data.getData().length() > 0) {
-         LOG_INFO(TAG, "** data received, handling! **");
+         LOG(INFO) << TAG << "** data received, handling! **";
 			// parse data to a student data object
 			StudentDataItem * item = new StudentDataItem;
 			if (item->parse(data.getData(), "summarydata")) {

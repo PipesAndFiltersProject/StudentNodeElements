@@ -8,8 +8,9 @@
 
 #include <sstream>
 
+#include <g3log/g3log.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 #include <OHARBaseLayer/Package.h>
 
 #include <OHARStudentLayer/StudentNetOutputHandler.h>
@@ -20,7 +21,7 @@ namespace OHARStudent {
 	
 	
 	StudentNetOutputHandler::StudentNetOutputHandler(OHARBase::ProcessorNode & myNode)
-	: node(myNode), TAG("NetOutputHandler")
+	: node(myNode), TAG("SNetOutputHandler ")
 	{
 	}
 	
@@ -36,7 +37,7 @@ namespace OHARStudent {
     @return Returns true if package was handled, otherwise returns false.
     */
 	bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
-      LOG_INFO(TAG, "Starting to send a package");
+      LOG(INFO) << TAG << "Starting to send a package";
 		if (data.getType() == OHARBase::Package::Data) {
 			OHARBase::DataItem * item = data.getDataItem();
          // If the package contains the binary data object...
@@ -45,7 +46,8 @@ namespace OHARStudent {
             // ...and it was a student data item object...
 				if (student) {
                // ...stream the data into a string payload...
-               LOG_INFO(TAG, "It is a student so creating payload");
+               LOG(INFO) << TAG << "It is a student so creating payload";
+               node.showUIMessage("Sending student to next node: " + student->getName());
 					std::stringstream stream;
 					std::string payload;
 					stream << *(student);
@@ -54,14 +56,14 @@ namespace OHARStudent {
 					data.setData(payload);
                // ... and erase the binary data item from the Package...
 					data.setDataItem(0);
-               LOG_INFO(TAG, "And telling the processornode to send.");
+               LOG(INFO) << TAG << "And telling the processornode to send.";
                // ... and ask the Node to send the data to the next Node.
 					node.sendData(data);
 				}
 			}
 			return true; // data consumed, sent away. No need to pass along anymore.
 		} else if (data.getType() == OHARBase::Package::Control)  {
-         LOG_INFO(TAG, "Forwarding a command: " << data.getData());
+         LOG(INFO) << TAG << "Forwarding a command: " << data.getData();
 			node.sendData(data);
 			return true;
 		}
