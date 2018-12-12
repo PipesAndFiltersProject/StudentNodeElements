@@ -11,6 +11,8 @@
 
 #include <ostream>
 
+#include <nlohmann/json.hpp>
+
 #include <OHARBaseLayer/DataItem.h>
 
 
@@ -29,10 +31,10 @@ namespace OHARStudent {
       StudentDataItem(const StudentDataItem & another);
       virtual ~StudentDataItem();
       
-      OHARBase::DataItem * copy() const;
+      OHARBase::DataItem * copy() const override;
       
-      bool parse(const std::string & fromString, const std::string & contentType);
-      bool addFrom(const OHARBase::DataItem & another);
+      virtual bool parse(const std::string & fromString, const std::string & contentType) override;
+      bool addFrom(const OHARBase::DataItem & another) override;
 
       const std::string & getName() const;
       const std::string & getStudyProgram() const;
@@ -83,5 +85,9 @@ namespace OHARStudent {
    std::ostream & operator << (std::ostream & ostr, const StudentDataItem & item);
 
 
+   void to_json(nlohmann::json & j, const StudentDataItem & student);
+   void from_json(const nlohmann::json & j, StudentDataItem & student);
+   
+   
 } //namespace
 #endif /* defined(__PipesAndFiltersFramework__StudentDataItem__) */

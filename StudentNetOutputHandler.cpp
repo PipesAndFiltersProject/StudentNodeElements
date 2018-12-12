@@ -47,15 +47,19 @@ namespace OHARStudent {
 				if (student) {
                // ...stream the data into a string payload...
                LOG(INFO) << TAG << "It is a student so creating payload";
+               
                node.showUIMessage("Sending student to next node: " + student->getName());
-					std::stringstream stream;
-					std::string payload;
-					stream << *(student);
-					payload = stream.str();
+               
+               LOG(INFO) << TAG << "Student is converted to JSON... " << student->getName();
+               nlohmann::json j = *student;
+               LOG(INFO) << TAG << "...and put to a string... ";
+               std::string payload = j.dump();
+               
                // ... set it as the data for the Package...
+               LOG(INFO) << TAG << "...and put to a Package... ";
 					data.setData(payload);
                // ... and erase the binary data item from the Package...
-					data.setDataItem(0);
+					data.setDataItem(nullptr);
                LOG(INFO) << TAG << "And telling the processornode to send.";
                // ... and ask the Node to send the data to the next Node.
 					node.sendData(data);

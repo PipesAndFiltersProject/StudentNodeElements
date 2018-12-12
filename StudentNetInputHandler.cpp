@@ -46,14 +46,11 @@ namespace OHARStudent {
 		if (data.getType() == Package::Data && data.getData().length() > 0) {
          LOG(INFO) << TAG << "** data received, handling! **";
 			// parse data to a student data object
-			StudentDataItem * item = new StudentDataItem;
-			if (item->parse(data.getData(), "summarydata")) {
-				data.setDataItem(item);
-				data.setData("");
-			} else {
-				// could not parse.
-				delete item;
-			}
+         nlohmann::json j = nlohmann::json::parse(data.getData());
+         StudentDataItem * item = new StudentDataItem(j.get<OHARStudent::StudentDataItem>());
+         
+         data.setDataItem(item);
+         data.setData("");
 		}
 		return false; // Always let others handle this data package too.
 	}
