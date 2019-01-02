@@ -27,10 +27,10 @@ namespace OHARStudent {
  other handlers (e.g. file readers, graders,...).
  @author Antti Juustila
  */
-class StudentNetInputHandler : public OHARBase::DataHandler {
+class StudentInputHandler : public OHARBase::DataHandler {
 public:
-   StudentNetInputHandler();
-   virtual ~StudentNetInputHandler();
+   StudentInputHandler();
+   virtual ~StudentInputHandler();
    
    bool consume(OHARBase::Package & data);
    

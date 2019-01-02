@@ -11,20 +11,20 @@
 #include <OHARBaseLayer/ProcessorNode.h>
 #include <OHARBaseLayer/Package.h>
 
-#include <OHARStudentLayer/StudentNetInputHandler.h>
+#include <OHARStudentLayer/StudentInputHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
 
 namespace OHARStudent {
 	
-	const std::string StudentNetInputHandler::TAG = "SNetInputHandler ";
+	const std::string StudentInputHandler::TAG = "SNetInputHandler ";
 	
 	/** Default constructor, does nothing. */
-	StudentNetInputHandler::StudentNetInputHandler()
+	StudentInputHandler::StudentInputHandler()
 	{
 	}
 	
 	/** Destructor, does nothing. */
-	StudentNetInputHandler::~StudentNetInputHandler() {
+	StudentInputHandler::~StudentInputHandler() {
 	}
 	
 	/** Consumes the data in the package. In practise, assumes that
@@ -41,7 +41,7 @@ namespace OHARStudent {
 	 this object is not interested in) and other handlers should be given the
 	 change to use the package also.
 	 */
-	bool StudentNetInputHandler::consume(OHARBase::Package & data) {
+	bool StudentInputHandler::consume(OHARBase::Package & data) {
 		using namespace OHARBase;
 		if (data.getType() == Package::Data && data.getData().length() > 0) {
          LOG(INFO) << TAG << "** data received, handling! **";
