@@ -39,14 +39,16 @@ namespace OHARStudent {
       const std::string & getName() const;
       const std::string & getStudyProgram() const;
       int getExamPoints() const;
-      int getExercisePoints() const;
+      int getExercisePointsTotal() const;
+      const std::vector<int> & getExercisePoints() const;
       int getCourseProjectPoints() const;
       int getGrade() const;
       
       void setName(const std::string & theName);
       void setStudyProgram(const std::string & theDept);
       void setExamPoints(int pts);
-      void setExercisePoints(int pts);
+      void addToExercisePoints(int pts);
+      void setExercisePoints(const std::vector<int> & newPoints);
       void setCourseProjectPoints(int pts);
       /**
        Grade is calculated so use calculateGrade to determine it and use this method only for externalizing (to/from file or network using json).
@@ -70,7 +72,7 @@ namespace OHARStudent {
       /** The points student got from an examination. */
       int         examPoints;
       /** The points student got from participating in exercises. */
-      int         exercisePoints;
+      std::vector<int> exercisePoints;
       /** The points student got from the exercise work. */
       int         courseProjectPoints;
       /** The final grade student gets from the course. */

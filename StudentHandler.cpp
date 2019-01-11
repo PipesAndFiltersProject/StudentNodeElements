@@ -52,7 +52,7 @@ namespace OHARStudent {
     not be done. Returns false if package should be handled by following DataHandlers.
     */
    bool StudentHandler::consume(OHARBase::Package & data) {
-      bool retval = false; // didn't consume, pass to next handler.
+      bool retval = false; // didn't consume, or if consumed, still pass to next handler.
       if (data.getType() == OHARBase::Package::Data) {
          OHARBase::DataItem * item = data.getDataItem();
          if (item) {
@@ -62,12 +62,12 @@ namespace OHARStudent {
                LOG(INFO) << TAG << "Consuming data from network";
                StudentDataItem * containerStudent = findStudent(*newStudent);
                if (containerStudent) {
-                  LOG(INFO) << TAG << "Student data from file & net merged now. " << containerStudent->getName();
+                  LOG(INFO) << TAG << "Student data at node merged now with incoming. " << containerStudent->getName();
                   node.showUIMessage("Found local student data, merging with received data.");
                   newStudent->addFrom(*containerStudent);
                   dataItems.remove(containerStudent);
                   delete containerStudent;
-                  node.passToNextHandlers(this, data);
+                  // node.passToNextHandlers(this, data);
                } else {
                   LOG(INFO) << TAG << "No matching student data from file yet, hold it in container.";
                   node.showUIMessage("No local data for this student, waiting for it");

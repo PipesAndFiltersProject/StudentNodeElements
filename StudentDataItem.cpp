@@ -19,7 +19,7 @@ namespace OHARStudent {
    GradeCalculator * StudentDataItem::calculator = 0;
    
    StudentDataItem::StudentDataItem()
-   : examPoints(-1), exercisePoints(-1), courseProjectPoints(-1),
+   : examPoints(-1), courseProjectPoints(-1),
    grade(-1), TAG("SDataItem ")
    {
    }
@@ -52,7 +52,11 @@ namespace OHARStudent {
       return examPoints;
    }
    
-   int StudentDataItem::getExercisePoints() const {
+   int StudentDataItem::getExercisePointsTotal() const {
+      return std::accumulate(exercisePoints.begin(), exercisePoints.end(), 0);
+   }
+   
+   const std::vector<int> & StudentDataItem::getExercisePoints() const {
       return exercisePoints;
    }
    
@@ -82,8 +86,12 @@ namespace OHARStudent {
       examPoints = pts;
    }
    
-   void StudentDataItem::setExercisePoints(int pts) {
-      exercisePoints = pts;
+   void StudentDataItem::addToExercisePoints(int pts) {
+      exercisePoints.push_back(pts);
+   }
+   
+   void StudentDataItem::setExercisePoints(const std::vector<int> & newPoints) {
+      exercisePoints = newPoints;
    }
    
    void StudentDataItem::setCourseProjectPoints(int pts) {
@@ -114,7 +122,7 @@ namespace OHARStudent {
          setName(strings.at(1));
          setStudyProgram(strings.at(2));
          setExamPoints(std::stoi(strings.at(3)));
-         setExercisePoints(std::stoi(strings.at(4)));
+         addToExercisePoints(std::stoi(strings.at(4)));
          setCourseProjectPoints(std::stoi(strings.at(5)));
          return true;
       } else if (contentType == "studentdata") {
@@ -125,8 +133,7 @@ namespace OHARStudent {
       } else if (contentType == "exercisedata") {
          setId(strings.at(0));
          for (int count = 1; count < strings.size(); count++) {
-            if (strings.at(count) == "1")
-               this->exercisePoints++;
+               exercisePoints.push_back(std::stoi(strings.at(count)));
          }
          return true;
       } else if (contentType == "exerciseworkdata") {
@@ -156,7 +163,7 @@ namespace OHARStudent {
             if (this->examPoints < 0) {
                this->examPoints = item->examPoints;
             }
-            if (this->exercisePoints < 0) {
+            if (this->exercisePoints.empty()) {
                this->exercisePoints = item->exercisePoints;
             }
             if (this->courseProjectPoints < 0) {
@@ -182,7 +189,7 @@ namespace OHARStudent {
    
    std::ostream & operator << (std::ostream & ostr, const StudentDataItem & item) {
       ostr << item.getId() << "\t" << item.getName() << "\t" << item.getStudyProgram()
-      << "\t" << item.getExamPoints() << "\t" << item.getExercisePoints()
+      << "\t" << item.getExamPoints() << "\t" << item.getExercisePointsTotal()
       << "\t" << item.getCourseProjectPoints() << "\t" << item.getGrade() << std::endl;
       return ostr;
    }
@@ -202,8 +209,10 @@ namespace OHARStudent {
       if (student.getExamPoints() >= 0) {
          j["exampoints"] = student.getExamPoints();
       }
-      if (student.getExercisePoints() >= 0) {
-         j["exercisepoints"] = student.getExercisePoints();
+      const std::vector<int> & xPoints = student.getExercisePoints();
+      if (xPoints.size() > 0) {
+         nlohmann::json j_vec(xPoints);
+         j["exercisepoints"] = j_vec;
       }
       if (student.getCourseProjectPoints() >= 0) {
          j["courseprojectpoints"] = student.getCourseProjectPoints();
@@ -225,7 +234,9 @@ namespace OHARStudent {
          student.setExamPoints(j.at("exampoints"));
       }
       if (j.find("exercisepoints") != j.end()) {
-         student.setExamPoints(j.at("exercisepoints"));
+         std::vector<int> xPoints = j["exercisepoints"];
+         // xPoints = j.at("exercisepoints").get<std::vector<int>>();
+         student.setExercisePoints(xPoints);
       }
       if (j.find("courseprojectpoints") != j.end()) {
          student.setCourseProjectPoints(j.at("courseprojectpoints"));

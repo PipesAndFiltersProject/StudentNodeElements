@@ -18,7 +18,7 @@ namespace OHARStudent {
    int CruelGrader::calculate(const StudentDataItem & source) {
       int grade = 0; // Assume failed; cruel eh?
       int examPoints = source.getExamPoints();
-      int exercisePoints = source.getExercisePoints();
+      int exercisePoints = source.getExercisePointsTotal();
       int exerciseWorkPoints = source.getCourseProjectPoints();
       if (examPoints < 12) {
          return grade; // failed
