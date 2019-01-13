@@ -33,7 +33,7 @@ namespace OHARStudent {
                 tt = system_clock::to_time_t ( today );
                 file << std::endl << std::endl;
                 file << "** Welcome to student register system" << std::endl;
-                file << "** (c) Antti Juustila, 2014-2018. University of Oulu, Finland." << std::endl;
+                file << "** (c) Antti Juustila, 2014-2019. University of Oulu, Finland." << std::endl;
                 file << "** Today is: " << ctime(&tt) << std::endl;
                 file << "** Following grades have been awarded:" << std::endl;
                 file << "ID\tName\t\tDept\tExam\tExerc\tWork\tGRADE" << std::endl;
