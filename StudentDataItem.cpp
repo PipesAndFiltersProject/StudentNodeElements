@@ -113,7 +113,6 @@ namespace OHARStudent {
    
    
    bool StudentDataItem::parse(const std::string & fromString, const std::string & contentType) {
-      // TODO: change logs to use macros LOG_INFO etc when reimplementing using json.
       std::vector<std::string> strings;
       boost::split(strings, fromString, boost::is_any_of("\t"));
       LOG(INFO) << TAG << "Parsing student string; item count: " << strings.size();

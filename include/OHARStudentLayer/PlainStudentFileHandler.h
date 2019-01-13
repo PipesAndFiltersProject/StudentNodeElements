@@ -9,8 +9,6 @@
 #ifndef __PipesAndFiltersFramework__PlainStudentFileHandler__
 #define __PipesAndFiltersFramework__PlainStudentFileHandler__
 
-#include <list>
-
 #include <OHARBaseLayer/DataHandler.h>
 #include <OHARBaseLayer/DataReaderObserver.h>
 

@@ -10,7 +10,6 @@
 #define __PipesAndFiltersFramework__StudentFileReader__
 
 #include <string>
-#include <list>
 
 #include <OHARBaseLayer/DataFileReader.h>
 
