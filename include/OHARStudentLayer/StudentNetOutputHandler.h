@@ -27,7 +27,7 @@ namespace OHARStudent {
 		StudentNetOutputHandler(OHARBase::ProcessorNode & myNode);
 		virtual ~StudentNetOutputHandler();
 		
-		bool consume(OHARBase::Package & data);
+		bool consume(OHARBase::Package & data) override;
 		
 	private:
       /** The Node where this handler is located in. Needed since Node sends the actual data. */

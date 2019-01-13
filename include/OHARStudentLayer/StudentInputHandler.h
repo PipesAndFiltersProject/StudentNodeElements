@@ -32,7 +32,7 @@ public:
    StudentInputHandler();
    virtual ~StudentInputHandler();
    
-   bool consume(OHARBase::Package & data);
+   bool consume(OHARBase::Package & data) override;
    
 private:
    static const std::string TAG;

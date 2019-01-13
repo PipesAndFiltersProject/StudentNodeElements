@@ -28,7 +28,7 @@ namespace OHARStudent {
       StudentWriterHandler(OHARBase::ProcessorNode & myNode);
       virtual ~StudentWriterHandler();
       
-      bool consume(OHARBase::Package & data);
+      bool consume(OHARBase::Package & data) override;
       
    private:
       /** The ProcessorNode where this handler is residing in. */

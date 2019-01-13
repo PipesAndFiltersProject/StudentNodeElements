@@ -16,7 +16,7 @@ namespace OHARStudent {
    /** One implementation for grading students */
    class TheUsualGrader : public GradeCalculator {
    public:
-      int calculate(const StudentDataItem & source);
+      int calculate(const StudentDataItem & source) override;
    };
 
 	

@@ -45,10 +45,10 @@ namespace OHARStudent {
       StudentHandler(OHARBase::ProcessorNode & myNode);
       virtual ~StudentHandler();
       
-      bool consume(OHARBase::Package & data);
+      bool consume(OHARBase::Package & data) override;
 
       // From DataReaderObserver
-      void handleNewItem(OHARBase::DataItem * item);
+      void handleNewItem(OHARBase::DataItem * item) override;
       
    private:
       void readFile();
