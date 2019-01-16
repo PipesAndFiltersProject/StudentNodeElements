@@ -22,7 +22,8 @@ namespace OHARStudent {
     @returns a GradeCalculator implementation.
     */
    GradeCalculator * GraderFactory::makeGrader() {
-      std::default_random_engine generator(time(0));
+      std::random_device rd;
+      std::default_random_engine generator(rd());
       std::uniform_int_distribution<int> distribution(0,1);
       int dice_roll = distribution(generator);
       
