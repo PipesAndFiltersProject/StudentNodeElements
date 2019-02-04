@@ -52,7 +52,11 @@ namespace OHARStudent {
                 if (student) {
                     writer->write(student);
                     node.showUIMessage("Wrote data to file for student " + student->getName());
+                } else {
+                   LOG(WARNING) << "No student object to write to the file";
                 }
+            } else {
+               LOG(WARNING) << "No object in Package to write to the file";
             }
         }
         return false; // Don't let others handle this data package since it is now finally handled.

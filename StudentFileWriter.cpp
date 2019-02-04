@@ -40,6 +40,8 @@ namespace OHARStudent {
             } else {
                 LOG(WARNING) << "Could not open the output file.";
             }
+        } else {
+           LOG(WARNING) << "No file name set for StudentFileWriter";
         }
     }
     
