@@ -21,9 +21,10 @@
 
 namespace OHARStudent {
     
-    
+   const std::string PlainStudentFileHandler::TAG{"SPlainFileHandler "};
+   
     PlainStudentFileHandler::PlainStudentFileHandler(OHARBase::ProcessorNode & myNode)
-    : node(myNode), TAG("SPlainFileHandler ")
+    : node(myNode)
     {
     }
     

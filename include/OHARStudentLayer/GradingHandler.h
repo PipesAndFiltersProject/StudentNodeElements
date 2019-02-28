@@ -31,7 +31,7 @@ namespace OHARStudent {
 		
 	private:
       
-		const std::string TAG;
+		static const std::string TAG;
 	};
 	
 	

@@ -19,9 +19,10 @@
 
 namespace OHARStudent {
     
-    
+   const std::string StudentNetOutputHandler::TAG{"SNetOutputHandler "};
+   
     StudentNetOutputHandler::StudentNetOutputHandler(OHARBase::ProcessorNode & myNode)
-    : node(myNode), TAG("SNetOutputHandler ")
+    : node(myNode)
     {
     }
     

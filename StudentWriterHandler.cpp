@@ -19,14 +19,15 @@
 
 
 namespace OHARStudent {
-    
+   
+   const std::string StudentWriterHandler::TAG{"SWriterHandler "};
     
     /** Initializes the writer handler by creating the writer object. The file name
      used to write the student data into, is gotten from the ProcessorNode configuration.
      @param myNode The node where the handler is.
      */
     StudentWriterHandler::StudentWriterHandler(OHARBase::ProcessorNode & myNode)
-    : node(myNode), TAG("SWriterHandler ")
+    : node(myNode)
     {
         writer = new StudentFileWriter(node.getOutputFileName());
     }

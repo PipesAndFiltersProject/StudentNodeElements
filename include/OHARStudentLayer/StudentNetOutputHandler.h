@@ -32,7 +32,7 @@ namespace OHARStudent {
 	private:
       /** The Node where this handler is located in. Needed since Node sends the actual data. */
 		OHARBase::ProcessorNode & node;
-		const std::string TAG;
+		static const std::string TAG;
 	};
 	
 	

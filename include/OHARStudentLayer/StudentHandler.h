@@ -57,7 +57,7 @@ namespace OHARStudent {
       
       /** The ProcessorNode where this handler is residing in. */
       OHARBase::ProcessorNode & node;
-      const std::string TAG;
+      static const std::string TAG;
       /** This list holds the student data handled by this handler. */
       std::list<OHARBase::DataItem*> dataItems;
       

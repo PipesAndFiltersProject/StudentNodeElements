@@ -32,7 +32,7 @@ namespace OHARStudent {
       OHARBase::DataItem * parse(const std::string & str, const std::string & contentType) override;
       
    private:
-      const std::string TAG;
+      static const std::string TAG;
    };
 
 	

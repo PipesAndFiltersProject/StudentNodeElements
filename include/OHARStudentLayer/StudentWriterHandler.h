@@ -35,7 +35,7 @@ namespace OHARStudent {
       OHARBase::ProcessorNode & node;
       /** The writer to use in writing the data into the file. */
       StudentFileWriter * writer;
-      const std::string TAG;
+      static const std::string TAG;
    };
 
 

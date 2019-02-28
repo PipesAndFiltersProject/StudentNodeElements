@@ -20,9 +20,10 @@
 
 namespace OHARStudent {
    
+   const std::string StudentHandler::TAG{"StudentHandler "};
    
    StudentHandler::StudentHandler(OHARBase::ProcessorNode & myNode)
-   : node(myNode), TAG("StudentHandler ")
+   : node(myNode)
    {
    }
    

@@ -81,7 +81,7 @@ namespace OHARStudent {
       /** A calculator object to calculate the final grade for the student. */
       static GradeCalculator * calculator;
       
-      const std::string TAG;
+      static const std::string TAG;
    };
 
    std::ostream & operator << (std::ostream & ostr, const StudentDataItem & item);

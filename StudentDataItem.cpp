@@ -17,18 +17,18 @@
 namespace OHARStudent {
    
    GradeCalculator * StudentDataItem::calculator = 0;
+   const std::string StudentDataItem::TAG{"SDataItem "};
    
    StudentDataItem::StudentDataItem()
    : examPoints(-1), courseProjectPoints(-1),
-   grade(-1), TAG("SDataItem ")
+   grade(-1)
    {
    }
    
    StudentDataItem::StudentDataItem(const StudentDataItem & another)
    : OHARBase::DataItem(another), name(another.name), department(another.department),
    examPoints(another.examPoints), exercisePoints(another.exercisePoints),
-   courseProjectPoints(another.courseProjectPoints), grade(another.grade),
-   TAG("SDataItem ")
+   courseProjectPoints(another.courseProjectPoints), grade(another.grade)
    {
       
    }

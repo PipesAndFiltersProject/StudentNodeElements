@@ -15,9 +15,10 @@
 
 namespace OHARStudent {
 
-	
+   const std::string StudentFileReader::TAG{"SFileReader "};
+   
    StudentFileReader::StudentFileReader(OHARBase::DataReaderObserver & obs)
-   : OHARBase::DataFileReader(obs), TAG("SFileReader ") {
+   : OHARBase::DataFileReader(obs) {
       
    }
 

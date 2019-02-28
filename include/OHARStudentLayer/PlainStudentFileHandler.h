@@ -37,7 +37,7 @@ namespace OHARStudent {
       void readFile();
       
       OHARBase::ProcessorNode & node;
-      const std::string TAG;
+      static const std::string TAG;
    };
 
 	
