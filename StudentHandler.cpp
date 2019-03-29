@@ -108,12 +108,14 @@ namespace OHARStudent {
             p.setDataItem(newStudent);
             dataItems.remove(containerStudent);
             delete containerStudent;
+            LOG(INFO) << "METRICS students in handler: " << dataItems.size();
             node.passToNextHandlers(this, p);
          } else {
             node.showUIMessage("Have not yet got data for this student from previous node, holding data.");
             node.showUIMessage("Holding " + std::to_string(dataItems.size()+1) + " students now.");
             LOG(INFO) << TAG << "No matching student data from network, hold it in container. " << newStudent->getName();
             dataItems.push_back(newStudent);
+            LOG(INFO) << "METRICS students in handler: " << dataItems.size();
          }
       }
       LOG(INFO) << TAG << "Container holds " << dataItems.size()+1 << " students.";
