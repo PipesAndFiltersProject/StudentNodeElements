@@ -32,16 +32,16 @@ namespace OHARStudent {
     @param contentType Which kind of student data the line contains.
     @returns The new student data item, or null if creation fails.
     */
-   OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
-      std::unique_ptr<StudentDataItem> itemPtr(new StudentDataItem());
+   std::unique_ptr<OHARBase::DataItem> StudentFileReader::parse(const std::string & str, const std::string & contentType) {
+      std::unique_ptr<StudentDataItem> itemPtr = std::make_unique<StudentDataItem>();
       if (str.length() > 0) {
          LOG(INFO) << TAG << "Parsing string " << str.substr(0,15) << "...";
          if (!itemPtr->parse(str, contentType)) {
             LOG(WARNING) << TAG << "StudentDataItem failed to parse string!";
-            return nullptr;
+            itemPtr.release();
          }
       }
-      return itemPtr.release();
+      return itemPtr;
    }
 
 

@@ -47,9 +47,9 @@ namespace OHARStudent {
          LOG(INFO) << TAG << "** data received, handling! **";
 			// parse data to a student data object
          nlohmann::json j = nlohmann::json::parse(data.getData());
-         StudentDataItem * item = new StudentDataItem(j.get<OHARStudent::StudentDataItem>());
+         std::unique_ptr<StudentDataItem> item = std::make_unique<StudentDataItem>(j.get<OHARStudent::StudentDataItem>());
          
-         data.setDataItem(item);
+         data.setDataItem(std::move(item));
          data.setData("");
 		}
 		return false; // Always let others handle this data package too.

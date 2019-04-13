@@ -12,11 +12,7 @@
 #include <string>
 
 #include <OHARBaseLayer/DataFileReader.h>
-
-namespace OHARBase {
-	class DataItem;
-}
-
+#include <OHARBaseLayer/DataItem.h>
 
 namespace OHARStudent {
 
@@ -29,7 +25,7 @@ namespace OHARStudent {
       virtual ~StudentFileReader();
       
    protected:
-      OHARBase::DataItem * parse(const std::string & str, const std::string & contentType) override;
+      std::unique_ptr<OHARBase::DataItem> parse(const std::string & str, const std::string & contentType) override;
       
    private:
       static const std::string TAG;

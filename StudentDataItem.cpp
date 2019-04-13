@@ -33,8 +33,8 @@ namespace OHARStudent {
       
    }
    
-   OHARBase::DataItem * StudentDataItem::copy() const {
-      return new StudentDataItem(*this);
+   std::unique_ptr<OHARBase::DataItem> StudentDataItem::clone() const {
+      return std::make_unique<StudentDataItem>(*this);
    }
    
    StudentDataItem::~StudentDataItem() {

@@ -11,6 +11,7 @@
 
 #include <OHARBaseLayer/DataHandler.h>
 #include <OHARBaseLayer/DataReaderObserver.h>
+#include <OHARBaseLayer/DataItem.h>
 
 
 namespace OHARBase {
@@ -31,7 +32,7 @@ namespace OHARStudent {
       bool consume(OHARBase::Package & data) override;
       
       // From DataReaderObserver
-      void handleNewItem(OHARBase::DataItem * item) override;
+      void handleNewItem(std::unique_ptr<OHARBase::DataItem> item) override;
       
    private:
       void readFile();

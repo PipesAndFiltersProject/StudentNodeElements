@@ -71,7 +71,7 @@ namespace OHARStudent {
                   // node.passToNextHandlers(this, data);
                } else {
                   node.showUIMessage("No local data for this student, waiting for it");
-                  dataItems.push_back(newStudent->copy());
+                  dataItems.push_back(newStudent->clone().release());
                   LOG(INFO) << TAG << "No matching student data from file yet, hold it in container with " << dataItems.size()+1 << " elements";
                   retval = true; // consumed the item and keeping it until additional data found.
                }
@@ -92,10 +92,10 @@ namespace OHARStudent {
     the container and it waits there for further data (from the previous Node in the network).
     @param item The data item read from the file.
     */
-   void StudentHandler::handleNewItem(OHARBase::DataItem * item) {
+   void StudentHandler::handleNewItem(std::unique_ptr<OHARBase::DataItem> item) {
       // Check if the item is already in the container.
       LOG(INFO) << TAG << "One new data item from file";
-      StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
+      StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item.get());
       if (newStudent) {
          node.showUIMessage("Student data read from file for " + newStudent->getName());
          StudentDataItem * containerStudent = findStudent(*newStudent);
@@ -105,7 +105,7 @@ namespace OHARStudent {
             newStudent->addFrom(*containerStudent);
             OHARBase::Package p;
             p.setType(OHARBase::Package::Data);
-            p.setDataItem(newStudent);
+            p.setDataItem(std::move(item));
             dataItems.remove(containerStudent);
             delete containerStudent;
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
@@ -115,6 +115,7 @@ namespace OHARStudent {
             node.showUIMessage("Holding " + std::to_string(dataItems.size()+1) + " students now.");
             LOG(INFO) << TAG << "No matching student data from network, hold it in container. " << newStudent->getName();
             dataItems.push_back(newStudent);
+            item.release();
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
          }
       }
