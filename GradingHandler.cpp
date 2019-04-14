@@ -32,7 +32,7 @@ namespace OHARStudent {
    }
 
    GradingHandler::~GradingHandler() {
-      StudentDataItem::setGradeCalculator(0);
+      StudentDataItem::setGradeCalculator(nullptr);
    }
 
    /** Grades the student based on the various course passing aspects, using the 
