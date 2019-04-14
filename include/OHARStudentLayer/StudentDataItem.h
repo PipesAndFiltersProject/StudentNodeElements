@@ -31,7 +31,7 @@ namespace OHARStudent {
       StudentDataItem(const StudentDataItem & another);
       virtual ~StudentDataItem();
       
-      virtual std::unique_ptr<DataItem> clone() const override;
+      virtual std::unique_ptr<OHARBase::DataItem> clone() const override;
       
       virtual bool parse(const std::string & fromString, const std::string & contentType) override;
       bool addFrom(const OHARBase::DataItem & another) override;
