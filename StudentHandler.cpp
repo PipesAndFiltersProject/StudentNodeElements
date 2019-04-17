@@ -55,7 +55,7 @@ namespace OHARStudent {
    bool StudentHandler::consume(OHARBase::Package & data) {
       bool retval = false; // didn't consume, or if consumed, still pass to next handler.
       if (data.getType() == OHARBase::Package::Data) {
-         OHARBase::DataItem * item = data.getDataItem();
+         OHARBase::DataItem * item = data.getPayloadObject();
          if (item) {
             StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
             if (newStudent) {
@@ -78,7 +78,7 @@ namespace OHARStudent {
             }
          }
       } else if (data.getType() == OHARBase::Package::Control) {
-         if (data.getData() == "readfile") {
+         if (data.getPayloadString() == "readfile") {
             readFile();
          }
       }
@@ -103,13 +103,13 @@ namespace OHARStudent {
             node.showUIMessage("Had received same student data from previous node, combining.");
             LOG(INFO) << TAG << "Student already in container, combine and pass on! " << containerStudent->getName();
             newStudent->addFrom(*containerStudent);
-            OHARBase::Package p;
-            p.setType(OHARBase::Package::Data);
-            p.setDataItem(std::move(item));
+            OHARBase::Package package;
+            package.setType(OHARBase::Package::Data);
+            package.setPayload(std::move(item));
             dataItems.remove(containerStudent);
             delete containerStudent;
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
-            node.passToNextHandlers(this, p);
+            node.passToNextHandlers(this, package);
          } else {
             node.showUIMessage("Have not yet got data for this student from previous node, holding data.");
             node.showUIMessage("Holding " + std::to_string(dataItems.size()+1) + " students now.");

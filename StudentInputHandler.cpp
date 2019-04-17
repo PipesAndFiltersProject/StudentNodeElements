@@ -43,14 +43,13 @@ namespace OHARStudent {
 	 */
 	bool StudentInputHandler::consume(OHARBase::Package & data) {
 		using namespace OHARBase;
-		if (data.getType() == Package::Data && data.getData().length() > 0) {
+		if (data.getType() == Package::Data && data.getPayloadString().length() > 0) {
          LOG(INFO) << TAG << "** data received, handling! **";
 			// parse data to a student data object
-         nlohmann::json j = nlohmann::json::parse(data.getData());
+         nlohmann::json j = nlohmann::json::parse(data.getPayloadString());
          std::unique_ptr<StudentDataItem> item = std::make_unique<StudentDataItem>(j.get<OHARStudent::StudentDataItem>());
          
-         data.setDataItem(std::move(item));
-         data.setData("");
+         data.setPayload(std::move(item));
 		}
 		return false; // Always let others handle this data package too.
 	}

@@ -42,7 +42,7 @@ namespace OHARStudent {
     */
    bool GradingHandler::consume(OHARBase::Package & data) {
       if (data.getType() == OHARBase::Package::Data) {
-         OHARBase::DataItem * item = data.getDataItem();
+         OHARBase::DataItem * item = data.getPayloadObject();
          if (item) {
             StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
             if (student) {

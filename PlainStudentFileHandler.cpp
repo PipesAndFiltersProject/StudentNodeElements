@@ -47,7 +47,7 @@ namespace OHARStudent {
     */
    bool PlainStudentFileHandler::consume(OHARBase::Package & data) {
       if (data.getType() == OHARBase::Package::Control) {
-         if (data.getData() == "readfile") {
+         if (data.getPayloadString() == "readfile") {
             readFile();
          }
       }
@@ -65,12 +65,11 @@ namespace OHARStudent {
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item.get());
       if (newStudent) {
          LOG(INFO) << TAG << "Creating a package...";
-         OHARBase::Package p;
-         p.setType(OHARBase::Package::Data);
-         p.setDataItem(std::move(item));
-//         delete newStudent;
+         OHARBase::Package package;
+         package.setType(OHARBase::Package::Data);
+         package.setPayload(std::move(item));
          LOG(INFO) << TAG << "... to pass to next handler.";
-         node.passToNextHandlers(this, p);
+         node.passToNextHandlers(this, package);
       }
    }
    

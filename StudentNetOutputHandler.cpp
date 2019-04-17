@@ -40,7 +40,7 @@ namespace OHARStudent {
     bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
         LOG(INFO) << TAG << "Starting to send a package";
         if (data.getType() == OHARBase::Package::Data) {
-            OHARBase::DataItem * item = data.getDataItem();
+            OHARBase::DataItem * item = data.getPayloadObject();
             // If the package contains the binary data object...
             if (item) {
                 const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
@@ -58,9 +58,7 @@ namespace OHARStudent {
                     
                     // ... set it as the data for the Package...
                     LOG(INFO) << TAG << "...and put to a Package... ";
-                    data.setData(payload);
-                    // ... and erase the binary data item from the Package...
-                    data.setDataItem(nullptr);
+                    data.setPayload(payload);
                     LOG(INFO) << TAG << "And telling the processornode to send.";
                     // ... and ask the Node to send the data to the next Node.
                     node.sendData(data);
@@ -68,7 +66,7 @@ namespace OHARStudent {
             }
             return true; // data consumed, sent away. No need to pass along anymore.
         } else if (data.getType() == OHARBase::Package::Control)  {
-            LOG(INFO) << TAG << "Forwarding a command: " << data.getData();
+            LOG(INFO) << TAG << "Forwarding a command: " << data.getPayloadString();
             node.sendData(data);
             return true;
         }

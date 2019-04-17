@@ -47,7 +47,7 @@ namespace OHARStudent {
     bool StudentWriterHandler::consume(OHARBase::Package & data) {
         LOG(INFO) << TAG << "Starting to write a package to a file";
         if (data.getType() == OHARBase::Package::Data) {
-            OHARBase::DataItem * item = data.getDataItem();
+            OHARBase::DataItem * item = data.getPayloadObject();
             if (item) {
                 const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
                 if (student) {
