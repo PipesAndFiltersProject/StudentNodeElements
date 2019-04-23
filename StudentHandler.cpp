@@ -61,6 +61,9 @@ namespace OHARStudent {
             if (newStudent) {
                node.showUIMessage("Got student data for " + newStudent->getName());
                LOG(INFO) << TAG << "Consuming data from network";
+               // Since several threads can call handlers' consume at the
+               // same time, must use a mutex to guard multithreaded access to the list.
+               std::lock_guard<std::mutex> guard(listGuard);
                StudentDataItem * containerStudent = findStudent(*newStudent);
                if (containerStudent) {
                   LOG(INFO) << TAG << "Student data at node merged now with incoming. " << containerStudent->getName();

@@ -61,6 +61,7 @@ namespace OHARStudent {
       static const std::string TAG;
       /** This list holds the student data handled by this handler. */
       std::list<OHARBase::DataItem*> dataItems;
+      std::mutex listGuard;
       
    };
 
