@@ -102,6 +102,9 @@ namespace OHARStudent {
       if (newStudent) {
          node.showUIMessage("Student data read from file for " + newStudent->getName());
          StudentDataItem * containerStudent = findStudent(*newStudent);
+         // Since several threads can call handlers' consume at the
+         // same time, must use a mutex to guard multithreaded access to the list.
+         std::lock_guard<std::mutex> guard(listGuard);
          if (containerStudent) {
             node.showUIMessage("Had received same student data from previous node, combining.");
             LOG(INFO) << TAG << "Student already in container, combine and pass on! " << containerStudent->getName();
