@@ -79,9 +79,14 @@ namespace OHARStudent {
                   retval = true; // consumed the item and keeping it until additional data found.
                }
             }
+            node.updatePackageCountInQueue("handler", dataItems.size());
          }
       } else if (data.getType() == OHARBase::Package::Control) {
          if (data.getPayloadString() == "readfile") {
+            retval = true;
+            node.passToNextHandlers(this, data);
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(50ms);
             readFile();
          }
       }
@@ -124,6 +129,7 @@ namespace OHARStudent {
             item.release();
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
          }
+         node.updatePackageCountInQueue("handler", dataItems.size());
       }
       LOG(INFO) << TAG << "Container holds " << dataItems.size()+1 << " students.";
       
