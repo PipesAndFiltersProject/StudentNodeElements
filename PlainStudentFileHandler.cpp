@@ -40,7 +40,7 @@ namespace OHARStudent {
          using namespace std::chrono_literals;
          std::this_thread::sleep_for(50ms);
          reader.read(node.getDataFileName());
-      }).join();
+      }).detach();
    }
    
    /**
