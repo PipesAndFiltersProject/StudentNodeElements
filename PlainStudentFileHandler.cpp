@@ -35,8 +35,12 @@ namespace OHARStudent {
    /** Uses a StudentFileReader for reading student data from a file.
     File name is acquired from the ProcessorNode configuration. */
    void PlainStudentFileHandler::readFile() {
-      StudentFileReader reader(*this);
-      reader.read(node.getDataFileName());
+      std::thread( [this] {
+         StudentFileReader reader(*this);
+         using namespace std::chrono_literals;
+         std::this_thread::sleep_for(50ms);
+         reader.read(node.getDataFileName());
+      }).join();
    }
    
    /**

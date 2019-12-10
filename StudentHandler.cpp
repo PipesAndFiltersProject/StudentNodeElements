@@ -35,8 +35,12 @@ namespace OHARStudent {
     has the input file name as a configuration item. That file is then read.
     */
    void StudentHandler::readFile() {
-      StudentFileReader reader(*this);
-      reader.read(node.getDataFileName());
+      std::thread( [this] {
+         StudentFileReader reader(*this);
+         using namespace std::chrono_literals;
+         std::this_thread::sleep_for(50ms);
+         reader.read(node.getDataFileName());
+      }).join();
    }
    
    /**
@@ -83,10 +87,6 @@ namespace OHARStudent {
          }
       } else if (data.getType() == OHARBase::Package::Control) {
          if (data.getPayloadString() == "readfile") {
-            retval = true;
-            node.passToNextHandlers(this, data);
-            using namespace std::chrono_literals;
-            std::this_thread::sleep_for(50ms);
             readFile();
          }
       }
@@ -106,10 +106,10 @@ namespace OHARStudent {
       StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item.get());
       if (newStudent) {
          node.showUIMessage("Student data read from file for " + newStudent->getName());
-         StudentDataItem * containerStudent = findStudent(*newStudent);
          // Since several threads can call handlers' consume at the
          // same time, must use a mutex to guard multithreaded access to the list.
          std::lock_guard<std::mutex> guard(listGuard);
+         StudentDataItem * containerStudent = findStudent(*newStudent);
          if (containerStudent) {
             node.showUIMessage("Had received same student data from previous node, combining.");
             LOG(INFO) << TAG << "Student already in container, combine and pass on! " << containerStudent->getName();
@@ -129,8 +129,8 @@ namespace OHARStudent {
             item.release();
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
          }
-         node.updatePackageCountInQueue("handler", dataItems.size());
       }
+      node.updatePackageCountInQueue("handler", dataItems.size());
       LOG(INFO) << TAG << "Container holds " << dataItems.size()+1 << " students.";
       
    }
