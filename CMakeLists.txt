@@ -7,10 +7,10 @@ set(LIB_NAME OHARStudentLayer)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
+find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(g3logger REQUIRED)
-find_package(OHARBaseLayer CONFIG REQUIRED)
+find_package(OHARBaseLayer REQUIRED)
 
 if (Boost_FOUND AND OHARBaseLayer_FOUND AND nlohmann_json_FOUND)
    add_library(${LIB_NAME} STATIC CruelGrader.cpp PlainStudentFileHandler.cpp StudentFileWriter.cpp StudentNetOutputHandler.cpp GraderFactory.cpp StudentDataItem.cpp StudentHandler.cpp StudentWriterHandler.cpp GradingHandler.cpp StudentFileReader.cpp StudentInputHandler.cpp TheUsualGrader.cpp include/${LIB_NAME}/CruelGrader.h include/${LIB_NAME}/GradeCalculator.h
@@ -19,16 +19,15 @@ if (Boost_FOUND AND OHARBaseLayer_FOUND AND nlohmann_json_FOUND)
       include/${LIB_NAME}/StudentHandler.h include/${LIB_NAME}/StudentInputHandler.h include/${LIB_NAME}/StudentNetOutputHandler.h
       include/${LIB_NAME}/StudentWriterHandler.h include/${LIB_NAME}/TheUsualGrader.h)
 
-   set_target_properties(${LIB_NAME} PROPERTIES COMPILE_FLAGS -fPIC -g -Wall)
-   set_target_properties(${LIB_NAME} PROPERTIES LINK_FLAGS -Wl,-lpthread)
+   set_target_properties(${LIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 
-   target_link_libraries(${LIB_NAME} PUBLIC ${Boost_LIBRARIES} ${G3LOG_LIBRARIES} ${OHARBaseLayer_LIBRARIES})
-   target_link_libraries(${LIB_NAME} PRIVATE nlohmann_json::nlohmann_json)
+   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}>  ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS})
+
+   target_link_libraries(${LIB_NAME} PUBLIC Boost::system g3logger OHARBaseLayer::OHARBaseLayer nlohmann_json::nlohmann_json)
 
    set_target_properties(${LIB_NAME} PROPERTIES PUBLIC_HEADER "include/${LIB_NAME}/CruelGrader.h;include/${LIB_NAME}/PlainStudentFileHandler.h;include/${LIB_NAME}/StudentHandler.h;include/${LIB_NAME}/TheUsualGrader.h;include/${LIB_NAME}/GradeCalculator.h;include/${LIB_NAME}/StudentDataItem.h;include/${LIB_NAME}/StudentInputHandler.h;include/${LIB_NAME}/GraderFactory.h;include/${LIB_NAME}/StudentFileReader.h;include/${LIB_NAME}/StudentNetOutputHandler.h;include/${LIB_NAME}/GradingHandler.h;include/${LIB_NAME}/StudentFileWriter.h;include/${LIB_NAME}/StudentWriterHandler.h")
 
-   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}>  ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS})
 
    install(TARGETS ${LIB_NAME} EXPORT ${LIB_NAME}Targets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${LIB_NAME})
    install(EXPORT ${LIB_NAME}Targets FILE ${LIB_NAME}Targets.cmake NAMESPACE OHARStudentLayer:: DESTINATION lib/cmake/${LIB_NAME})
