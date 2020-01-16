@@ -33,8 +33,21 @@ namespace OHARStudent {
    /** Reads student data from an input file, using StudentFileReader.
     The file name to read data from is gotten from the ProcessorNode, which
     has the input file name as a configuration item. That file is then read.
+    Note that PlainStudentFileHandler has similar functionality. It is used in Nodes
+    which do not need StudentHandler (no merging of student object is needed), but
+    student data files still need to be read and handled.
     */
    void StudentHandler::readFile() {
+      // Why read the file in a thread? When readfile control Package arrives from the previous Node,
+      // and this node starts handling the command, the control / command handling is executed
+      // in the context of the incomingHandlerThread -- effectively stopping the handling of other
+      // packages waiting in the network interface, until file is read. Or, if the command is executed in the context of
+      // command handler thread, then other commands cannot be handled until file has been read -- if the
+      // file to read is very large, this could take seconds/tens of seconds. So, start a new thread when the file
+      // is read, to let the other thread continue the work it needs to do.
+      // This would be an issue only with very large files, so if optimization would be required, change the code below
+      // so that first, check the size of the file and if it is small then execute file reading without a thread.
+      // If it is large, then do as below, read the file in a thread.
       std::thread( [this] {
          StudentFileReader reader(*this);
          using namespace std::chrono_literals;
@@ -52,7 +65,7 @@ namespace OHARStudent {
     thus to combine student data from various sources (previous Node, file) and then
     pass the data to next handlers. Usually this means finally that the last handler
     will send the student data to the next Node.
-    @param data The Package containin the student data to handle.
+    @param data The Package containing the student data to handle.
     @returns Returns true if the data was handled and further processing of the package should
     not be done. Returns false if package should be handled by following DataHandlers.
     */
@@ -67,6 +80,7 @@ namespace OHARStudent {
                LOG(INFO) << TAG << "Consuming data from network";
                // Since several threads can call handlers' consume at the
                // same time, must use a mutex to guard multithreaded access to the list.
+               // Lock will be released when the guard variable goes out of scope (leaving the if block).
                std::lock_guard<std::mutex> guard(listGuard);
                StudentDataItem * containerStudent = findStudent(*newStudent);
                if (containerStudent) {
@@ -75,15 +89,14 @@ namespace OHARStudent {
                   newStudent->addFrom(*containerStudent);
                   dataItems.remove(containerStudent);
                   delete containerStudent;
-                  // node.passToNextHandlers(this, data);
                } else {
                   node.showUIMessage("No local data for this student, waiting for it");
                   dataItems.push_back(newStudent->clone().release());
                   LOG(INFO) << TAG << "No matching student data from file yet, hold it in container with " << dataItems.size()+1 << " elements";
                   retval = true; // consumed the item and keeping it until additional data found.
                }
-            }
-            node.updatePackageCountInQueue("handler", dataItems.size());
+               node.updatePackageCountInQueue("handler", dataItems.size());
+            } // guard lock released here.
          }
       } else if (data.getType() == OHARBase::Package::Control) {
          if (data.getPayloadString() == "readfile") {
@@ -108,6 +121,7 @@ namespace OHARStudent {
          node.showUIMessage("Student data read from file for " + newStudent->getName());
          // Since several threads can call handlers' consume at the
          // same time, must use a mutex to guard multithreaded access to the list.
+         // Lock will be released when the guard variable goes out of scope (leaving the if block).
          std::lock_guard<std::mutex> guard(listGuard);
          StudentDataItem * containerStudent = findStudent(*newStudent);
          if (containerStudent) {
@@ -129,8 +143,8 @@ namespace OHARStudent {
             item.release();
             LOG(INFO) << "METRICS students in handler: " << dataItems.size();
          }
-      }
-      node.updatePackageCountInQueue("handler", dataItems.size());
+         node.updatePackageCountInQueue("handler", dataItems.size());
+      } // guard lock goes out of scope here and is released.
       LOG(INFO) << TAG << "Container holds " << dataItems.size()+1 << " students.";
       
    }

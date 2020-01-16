@@ -111,7 +111,13 @@ namespace OHARStudent {
       }
    }
    
-   
+   /**
+    Parse the student data from a tsv record. Depending on the content type, the number of
+    values and the meaning of the tab separated values differ.
+    @param fromString The tsv separated student record.
+    @param contentType The type of student data to read (basic info, exam points, etc.).
+    @return Returns true if succeeded in parsing the data, false otherwise.
+    */
    bool StudentDataItem::parse(const std::string & fromString, const std::string & contentType) {
       std::vector<std::string> strings;
       boost::split(strings, fromString, boost::is_any_of("\t"));
@@ -149,6 +155,13 @@ namespace OHARStudent {
       return false;
    }
    
+/**
+ Combine two student objects with the same id, adding to <strong>this</strong> student
+ from the <strong>another</strong> student. Values are copied from the another student if
+ this student does not have that value already.
+ @param another The other student object to combine to this student object.
+ @return Returns true if successfully combined the student objects with the same id.
+ */
    bool StudentDataItem::addFrom(const OHARBase::DataItem & another) {
       const StudentDataItem * item = dynamic_cast<const StudentDataItem*>(&another);
       if (item) {
@@ -193,6 +206,11 @@ namespace OHARStudent {
       return ostr;
    }
    
+   /**
+    Externalizes (exports, marshalls) the Student object to a JSON structure.
+    @param j The JSON object to where the student object is exported to.
+    @param student The student which is exported.
+    */
    void to_json(nlohmann::json & j, const StudentDataItem & student) {
       // Only id is required, all other elements are optional.
       j = nlohmann::json{{"id", student.getId()}};
@@ -221,6 +239,11 @@ namespace OHARStudent {
       }
    }
    
+   /**
+    Internalizes (imports, marshalls) the Student object from a JSON structure.
+    @param j The JSON object from where the student object is imported from.
+    @param student The student which gets its values from the JSON structure.
+    */
    void from_json(const nlohmann::json & j, StudentDataItem & student) {
       student.setId(j.at("id"));
       if (j.find("name") != j.end()) {

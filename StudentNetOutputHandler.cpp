@@ -46,25 +46,17 @@ namespace OHARStudent {
                 const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
                 // ...and it was a student data item object...
                 if (student) {
-                    // ...stream the data into a string payload...
-                    LOG(INFO) << TAG << "It is a student so creating payload";
-                    
-                    node.showUIMessage("Sending student to next node: " + student->getName());
-                    
-                    LOG(INFO) << TAG << "Student is converted to JSON... " << student->getName();
+                    // ...put the data into a JSON string payload...
+                    LOG(INFO) << TAG << "Student is converted to JSON and sent... " << student->getName();
                     nlohmann::json j = *student;
-                    LOG(INFO) << TAG << "...and put to a string... ";
                     std::string payload = j.dump();
-                    
                     // ... set it as the data for the Package...
-                    LOG(INFO) << TAG << "...and put to a Package... ";
                     data.setPayload(payload);
-                    LOG(INFO) << TAG << "And telling the processornode to send.";
                     // ... and ask the Node to send the data to the next Node.
                     node.sendData(data);
                 }
             }
-            return true; // data consumed, sent away. No need to pass along anymore.
+            return true; // data consumed, sent away. No need to pass along to any handlers anymore.
         } else if (data.getType() == OHARBase::Package::Control)  {
             LOG(INFO) << TAG << "Forwarding a command: " << data.getPayloadString();
             node.sendData(data);

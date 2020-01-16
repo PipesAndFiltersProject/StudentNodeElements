@@ -35,6 +35,16 @@ namespace OHARStudent {
    /** Uses a StudentFileReader for reading student data from a file.
     File name is acquired from the ProcessorNode configuration. */
    void PlainStudentFileHandler::readFile() {
+      // Why read the file in a thread? When readfile control Package arrives from the previous Node,
+      // and this node starts handling the command, the control / command handling is executed
+      // in the context of the incomingHandlerThread -- effectively stopping the handling of other
+      // packages waiting in the network interface, until file is read. Or, if the command is executed in the context of
+      // command handler thread, then other commands cannot be handled until file has been read -- if the
+      // file to read is very large, this could take seconds/tens of seconds. So, start a new thread when the file
+      // is read, to let the other thread continue the work it needs to do.
+      // This would be an issue only with very large files, so if optimization would be required, change the code below
+      // so that first, check the size of the file and if it is small then execute file reading without a thread.
+      // If it is large, then do as below, read the file in a thread.
       std::thread( [this] {
          StudentFileReader reader(*this);
          using namespace std::chrono_literals;
