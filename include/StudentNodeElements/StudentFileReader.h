@@ -11,8 +11,8 @@
 
 #include <string>
 
-#include <OHARBaseLayer/DataFileReader.h>
-#include <OHARBaseLayer/DataItem.h>
+#include <ProcessorNode/DataFileReader.h>
+#include <ProcessorNode/DataItem.h>
 
 namespace OHARStudent {
 

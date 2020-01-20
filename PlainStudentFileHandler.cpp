@@ -11,12 +11,12 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Package.h>
+#include <ProcessorNode/ProcessorNode.h>
+#include <ProcessorNode/Package.h>
 
-#include <OHARStudentLayer/PlainStudentFileHandler.h>
-#include <OHARStudentLayer/StudentDataItem.h>
-#include <OHARStudentLayer/StudentFileReader.h>
+#include <StudentNodeElements/PlainStudentFileHandler.h>
+#include <StudentNodeElements/StudentDataItem.h>
+#include <StudentNodeElements/StudentFileReader.h>
 
 
 namespace OHARStudent {

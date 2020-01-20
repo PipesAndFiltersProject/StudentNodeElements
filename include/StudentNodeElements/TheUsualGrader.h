@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__TheUsualGrader__
 #define __PipesAndFiltersFramework__TheUsualGrader__
 
-#include <OHARStudentLayer/GradeCalculator.h>
+#include <StudentNodeElements/GradeCalculator.h>
 
 namespace OHARStudent {
 

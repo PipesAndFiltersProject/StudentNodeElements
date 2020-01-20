@@ -10,8 +10,8 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARStudentLayer/StudentFileWriter.h>
-#include <OHARStudentLayer/StudentDataItem.h>
+#include <StudentNodeElements/StudentFileWriter.h>
+#include <StudentNodeElements/StudentDataItem.h>
 
 
 namespace OHARStudent {

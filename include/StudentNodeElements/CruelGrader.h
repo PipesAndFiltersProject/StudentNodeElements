@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__CruelGrader__
 #define __PipesAndFiltersFramework__CruelGrader__
 
-#include <OHARStudentLayer/GradeCalculator.h>
+#include <StudentNodeElements/GradeCalculator.h>
 
 namespace OHARStudent {
 

@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__GradingHandler__
 #define __PipesAndFiltersFramework__GradingHandler__
 
-#include <OHARBaseLayer/DataHandler.h>
+#include <ProcessorNode/DataHandler.h>
 
 namespace OHARBase {
 	class ProcessorNode;

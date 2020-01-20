@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__StudentWriterHandler__
 #define __PipesAndFiltersFramework__StudentWriterHandler__
 
-#include <OHARBaseLayer/DataHandler.h>
+#include <ProcessorNode/DataHandler.h>
 
 namespace OHARBase {
 	class ProcessorNode;

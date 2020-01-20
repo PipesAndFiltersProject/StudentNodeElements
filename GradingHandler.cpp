@@ -8,12 +8,12 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Package.h>
+#include <ProcessorNode/ProcessorNode.h>
+#include <ProcessorNode/Package.h>
 
-#include <OHARStudentLayer/GraderFactory.h>
-#include <OHARStudentLayer/GradingHandler.h>
-#include <OHARStudentLayer/StudentDataItem.h>
+#include <StudentNodeElements/GraderFactory.h>
+#include <StudentNodeElements/GradingHandler.h>
+#include <StudentNodeElements/StudentDataItem.h>
 
 namespace OHARStudent {
 

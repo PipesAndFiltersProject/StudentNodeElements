@@ -11,8 +11,8 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARStudentLayer/StudentDataItem.h>
-#include <OHARStudentLayer/GradeCalculator.h>
+#include <StudentNodeElements/StudentDataItem.h>
+#include <StudentNodeElements/GradeCalculator.h>
 
 namespace OHARStudent {
    

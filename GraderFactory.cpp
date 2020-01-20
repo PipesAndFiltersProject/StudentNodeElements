@@ -10,9 +10,9 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARStudentLayer/GraderFactory.h>
-#include <OHARStudentLayer/TheUsualGrader.h>
-#include <OHARStudentLayer/CruelGrader.h>
+#include <StudentNodeElements/GraderFactory.h>
+#include <StudentNodeElements/TheUsualGrader.h>
+#include <StudentNodeElements/CruelGrader.h>
 
 
 namespace OHARStudent {

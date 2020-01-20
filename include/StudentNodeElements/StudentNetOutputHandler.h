@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__NetOutputHandler__
 #define __PipesAndFiltersFramework__NetOutputHandler__
 
-#include <OHARBaseLayer/DataHandler.h>
+#include <ProcessorNode/DataHandler.h>
 
 namespace OHARBase {
 	class ProcessorNode;

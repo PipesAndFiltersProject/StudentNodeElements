@@ -9,8 +9,8 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARStudentLayer/StudentFileReader.h>
-#include <OHARStudentLayer/StudentDataItem.h>
+#include <StudentNodeElements/StudentFileReader.h>
+#include <StudentNodeElements/StudentDataItem.h>
 
 
 namespace OHARStudent {
