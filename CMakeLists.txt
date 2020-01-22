@@ -6,6 +6,7 @@ set(LIB_NAME StudentNodeElements)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(FetchContent)
 
 find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
