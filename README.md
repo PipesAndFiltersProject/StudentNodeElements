@@ -19,11 +19,11 @@ Currently there is one app using this library, the StudentPassing.
 
 For more information, see the [ProcessorNode](https://bitbucket.org/anttijuu/processornode) library documentation as well as the [StudentPassing](https://bitbucket.org/anttijuu/studentpassing) app.
 
-## Who do I talk to? ##
+## Who do I talk to?
 
 Repo is owned and maintained by Antti Juustila (antti.juustila at oulu.fi)
 
-## License ##
+## License
 
 (c) Antti Juustila 2014-2020. This software is licensed in [GPL version 2 or later](https://opensource.org/licenses/gpl-2.0.php).
 
