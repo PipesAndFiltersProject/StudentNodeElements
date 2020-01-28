@@ -13,6 +13,30 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(g3logger REQUIRED)
 find_package(ProcessorNode REQUIRED)
 
+if (WIN32)
+    macro(get_WIN32_WINNT version)
+        if (CMAKE_SYSTEM_VERSION)
+            set(ver ${CMAKE_SYSTEM_VERSION})
+            string(REGEX MATCH "^([0-9]+).([0-9])" ver ${ver})
+            string(REGEX MATCH "^([0-9]+)" verMajor ${ver})
+            # Check for Windows 10, b/c we'll need to convert to hex 'A'.
+            if ("${verMajor}" MATCHES "10")
+                set(verMajor "A")
+                string(REGEX REPLACE "^([0-9]+)" ${verMajor} ver ${ver})
+            endif ("${verMajor}" MATCHES "10")
+            # Remove all remaining '.' characters.
+            string(REPLACE "." "" ver ${ver})
+            # Prepend each digit with a zero.
+            string(REGEX REPLACE "([0-9A-Z])" "0\\1" ver ${ver})
+            set(${version} "0x${ver}")
+        endif(CMAKE_SYSTEM_VERSION)
+    endmacro(get_WIN32_WINNT)
+
+    get_WIN32_WINNT(ver)
+    add_definitions(-D_WIN32_WINNT=${ver})
+endif(WIN32)
+
+
 if (Boost_FOUND AND ProcessorNode_FOUND AND nlohmann_json_FOUND)
    add_library(${LIB_NAME} STATIC CruelGrader.cpp PlainStudentFileHandler.cpp StudentFileWriter.cpp StudentNetOutputHandler.cpp GraderFactory.cpp StudentDataItem.cpp StudentHandler.cpp StudentWriterHandler.cpp GradingHandler.cpp StudentFileReader.cpp StudentInputHandler.cpp TheUsualGrader.cpp include/${LIB_NAME}/CruelGrader.h include/${LIB_NAME}/GradeCalculator.h
       include/${LIB_NAME}/GraderFactory.h include/${LIB_NAME}/GradingHandler.h include/${LIB_NAME}/PlainStudentFileHandler.h
