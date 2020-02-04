@@ -6,7 +6,6 @@ set(LIB_NAME StudentNodeElements)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-include(FetchContent)
 
 find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
@@ -33,5 +32,5 @@ if (Boost_FOUND AND ProcessorNode_FOUND AND nlohmann_json_FOUND)
    install(EXPORT ${LIB_NAME}Targets FILE ${LIB_NAME}Targets.cmake NAMESPACE StudentNodeElements:: DESTINATION lib/cmake/${LIB_NAME})
    install(FILES ${LIB_NAME}Config.cmake DESTINATION lib/cmake/${LIB_NAME})
 
-   export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Config.cmake)
+   export(TARGETS ${LIB_NAME} FILE ${LIB_NAME}Targets.cmake)
 endif()
