@@ -38,7 +38,7 @@ namespace OHARStudent {
      @return Returns true if package was handled, otherwise returns false.
      */
     bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
-        LOG(INFO) << TAG << "Starting to send a package";
+        LOG(INFO) << TAG << "Converting the payload from object to JSON";
         if (data.getType() == OHARBase::Package::Data) {
             OHARBase::DataItem * item = data.getPayloadObject();
             // If the package contains the binary data object...
@@ -47,20 +47,20 @@ namespace OHARStudent {
                 // ...and it was a student data item object...
                 if (student) {
                     // ...put the data into a JSON string payload...
-                    LOG(INFO) << TAG << "Student is converted to JSON and sent... " << student->getName();
+                    LOG(INFO) << TAG << "Student is converted to JSON... " << student->getName();
                     nlohmann::json j = *student;
                     std::string payload = j.dump();
                     // ... set it as the data for the Package...
                     data.setPayload(payload);
-                    // ... and ask the Node to send the data to the next Node.
-                    node.sendData(data);
+//                    // ... and ask the Node to send the data to the next Node.
+//                    node.sendData(data);
                 }
             }
-            return true; // data consumed, sent away. No need to pass along to any handlers anymore.
+            // return true; // data consumed, sent away. No need to pass along to any handlers anymore.
         } else if (data.getType() == OHARBase::Package::Control)  {
-            LOG(INFO) << TAG << "Forwarding a command: " << data.getPayloadString();
-            node.sendData(data);
-            return true;
+//            LOG(INFO) << TAG << "Forwarding a command: " << data.getPayloadString();
+//            node.sendData(data);
+//            return true;
         }
         return false;
     }
