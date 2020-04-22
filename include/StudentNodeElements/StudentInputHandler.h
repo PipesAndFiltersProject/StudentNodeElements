@@ -20,7 +20,7 @@ namespace OHARStudent {
 
 /** Handles student data input, arriving from the network. 
  Class receives (in consume method) a Package object, which has the received
- data (non-parsed) in a string. This handler then parses the data from
+ data (non-parsed JSON) in a string. This handler then parses the data from
  the string to a StudentDataItem object, which is then stored in the DataItem
  member pointer in the Package and is available to use after this. The data 
  object can now be used to get and set data from/to the student object by

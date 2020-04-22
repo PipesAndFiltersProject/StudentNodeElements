@@ -9,7 +9,7 @@ include(CMakePackageConfigHelpers)
 
 find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
-find_package(g3logger REQUIRED)
+find_package(g3logger CONFIG REQUIRED)
 find_package(ProcessorNode REQUIRED)
 
 # Add a "doc" target to generate API documentation with Doxygen.
@@ -38,7 +38,7 @@ if (Boost_FOUND AND ProcessorNode_FOUND AND nlohmann_json_FOUND)
    set_target_properties(${LIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 
-   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}> ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS})
+   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}> ${Boost_INCLUDE_DIRS} ${G3LOGGER_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS})
 
    target_link_libraries(${LIB_NAME} PUBLIC Boost::system g3logger ProcessorNode::ProcessorNode nlohmann_json::nlohmann_json)
 

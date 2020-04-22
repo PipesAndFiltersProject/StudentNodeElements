@@ -10,7 +10,6 @@
 
 #include <g3log/g3log.hpp>
 
-#include <ProcessorNode/ProcessorNode.h>
 #include <ProcessorNode/Package.h>
 
 #include <StudentNodeElements/StudentNetOutputHandler.h>
@@ -21,8 +20,7 @@ namespace OHARStudent {
     
    const std::string StudentNetOutputHandler::TAG{"SNetOutputHandler "};
    
-    StudentNetOutputHandler::StudentNetOutputHandler(OHARBase::ProcessorNode & myNode)
-    : node(myNode)
+    StudentNetOutputHandler::StudentNetOutputHandler()
     {
     }
     
@@ -32,10 +30,10 @@ namespace OHARStudent {
     
     /**
      Consumes the data, assuming it contains the student data object in Node
-     internal format. Then formats the data to the format needed when sending
-     it to the next Node over the network.
+     internal format (object). Then formats the data to the format needed when sending
+     it to the next Node over the network (JSON).
      @param data The Package which contains the student data in binary (internal) format.
-     @return Returns true if package was handled, otherwise returns false.
+     @return Returns false to indicate that the package can be further handled by (possible) other handlers.
      */
     bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
         LOG(INFO) << TAG << "Converting the payload from object to JSON";
@@ -52,15 +50,8 @@ namespace OHARStudent {
                     std::string payload = j.dump();
                     // ... set it as the data for the Package...
                     data.setPayload(payload);
-//                    // ... and ask the Node to send the data to the next Node.
-//                    node.sendData(data);
                 }
             }
-            // return true; // data consumed, sent away. No need to pass along to any handlers anymore.
-        } else if (data.getType() == OHARBase::Package::Control)  {
-//            LOG(INFO) << TAG << "Forwarding a command: " << data.getPayloadString();
-//            node.sendData(data);
-//            return true;
         }
         return false;
     }

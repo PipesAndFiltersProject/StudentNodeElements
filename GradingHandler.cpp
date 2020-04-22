@@ -22,9 +22,8 @@ namespace OHARStudent {
 	/**
     Initializes the grading handler by creating a suitable grade calculator,
     using the help of the GraderFactory class.
-    @param myNode The ProcessorNode where the handler is located in.
     */
-   GradingHandler::GradingHandler(OHARBase::ProcessorNode & myNode)
+   GradingHandler::GradingHandler()
    {
       // Uses the static student member variable and setter so that all students
       // use the same grade calculator. Equal grading for all students, eh?!

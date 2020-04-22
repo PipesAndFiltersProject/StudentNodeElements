@@ -24,7 +24,7 @@ namespace OHARStudent {
     */
 	class GradingHandler : public OHARBase::DataHandler {
 	public:
-		GradingHandler(OHARBase::ProcessorNode & myNode);
+		GradingHandler();
 		virtual ~GradingHandler();
 		
 		bool consume(OHARBase::Package & data) override;

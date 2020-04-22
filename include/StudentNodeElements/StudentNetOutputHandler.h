@@ -12,7 +12,6 @@
 #include <ProcessorNode/DataHandler.h>
 
 namespace OHARBase {
-	class ProcessorNode;
 	class Package;
 }
 
@@ -20,18 +19,16 @@ namespace OHARStudent {
 	
 	/**
     This class converts the data from internal Node format to
-    external format to be sent over to network to a following Node.
+    external JSON format to be sent over to network to a following Node.
     */
 	class StudentNetOutputHandler : public OHARBase::DataHandler {
 	public:
-		StudentNetOutputHandler(OHARBase::ProcessorNode & myNode);
+		StudentNetOutputHandler();
 		virtual ~StudentNetOutputHandler();
 		
 		bool consume(OHARBase::Package & data) override;
 		
 	private:
-      /** The Node where this handler is located in. Needed since Node sends the actual data. */
-		OHARBase::ProcessorNode & node;
 		static const std::string TAG;
 	};
 	
