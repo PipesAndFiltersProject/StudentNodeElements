@@ -1,6 +1,6 @@
 # StudentNodeElements
 
-StudentNodeElements (SNE) is a library build upon the [ProcessorNode](https://bitbucket.org/anttijuu/processornode) library.
+StudentNodeElements (SNE) is a library build upon the [ProcessorNode](https://github.com/PipesAndFiltersProject/ProcessorNode) library.
 
 The purpose of SNE is to provide an application specific layer on top of ProcessorNode, for applications handling student data related to passing courses.
 
@@ -17,7 +17,7 @@ It should also be possible to design and implement a feature that actually expor
 
 Currently there is one app using this library, the StudentPassing. 
 
-For more information, see the [ProcessorNode](https://bitbucket.org/anttijuu/processornode) library documentation as well as the [StudentPassing](https://bitbucket.org/anttijuu/studentpassing) app.
+For more information, see the [ProcessorNode](https://github.com/PipesAndFiltersProject/ProcessorNode) library documentation as well as the [StudentPassing](https://github.com/PipesAndFiltersProject/StudentPassing) app.
 
 ## Who do I talk to?
 
