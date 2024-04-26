@@ -9,7 +9,7 @@ include(CMakePackageConfigHelpers)
 
 find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
-find_package(g3logger CONFIG REQUIRED)
+find_package(g3log CONFIG REQUIRED)
 find_package(ProcessorNode REQUIRED)
 
 # Add a "doc" target to generate API documentation with Doxygen.
@@ -21,7 +21,7 @@ find_package(ProcessorNode REQUIRED)
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
    configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/doxyfile @ONLY)
-   add_custom_target(doc
+   add_custom_target(sne-doc
       ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxyfile
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Generating API documentation with Doxygen" VERBATIM
@@ -38,9 +38,9 @@ if (Boost_FOUND AND ProcessorNode_FOUND AND nlohmann_json_FOUND)
    set_target_properties(${LIB_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 
-   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}> ${Boost_INCLUDE_DIRS} ${G3LOGGER_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS})
+   target_include_directories(${LIB_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/> $<INSTALL_INTERFACE:include/${LIB_NAME}> ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS})
 
-   target_link_libraries(${LIB_NAME} PUBLIC Boost::system g3logger ProcessorNode::ProcessorNode nlohmann_json::nlohmann_json)
+   target_link_libraries(${LIB_NAME} PUBLIC Boost::system g3log ProcessorNode::ProcessorNode nlohmann_json::nlohmann_json)
 
    set_target_properties(${LIB_NAME} PROPERTIES PUBLIC_HEADER "include/${LIB_NAME}/CruelGrader.h;include/${LIB_NAME}/PlainStudentFileHandler.h;include/${LIB_NAME}/StudentHandler.h;include/${LIB_NAME}/TheUsualGrader.h;include/${LIB_NAME}/GradeCalculator.h;include/${LIB_NAME}/StudentDataItem.h;include/${LIB_NAME}/StudentInputHandler.h;include/${LIB_NAME}/GraderFactory.h;include/${LIB_NAME}/StudentFileReader.h;include/${LIB_NAME}/StudentNetOutputHandler.h;include/${LIB_NAME}/GradingHandler.h;include/${LIB_NAME}/StudentFileWriter.h;include/${LIB_NAME}/StudentWriterHandler.h")
 
